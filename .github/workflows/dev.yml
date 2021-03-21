@@ -32,7 +32,8 @@ jobs:
         run: npm i
 
       - name: move to app folder
-          run: cd ./app
+          run: | 
+            cd ./app
       
       - name: build
         run: STAGE=dev npm run build
