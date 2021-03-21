@@ -1,6 +1,6 @@
 import React, { Component } from 'react'; 
 import {Table, Button} from 'reactstrap';
-import {faImage,faThumbsUp,faThumbsDown,faMoneyCheckAlt,faSearchLocation,faLocationArrow} from '@fortawesome/free-solid-svg-icons';
+import {faThumbsUp,faThumbsDown,faSearchLocation,faLocationArrow} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class App extends Component {
