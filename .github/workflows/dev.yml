@@ -43,7 +43,9 @@ jobs:
       #- name: move to app folder
         #run: | 
           #cd ./app
-      
+      - name: npm ci
+        run: npm ci --prefix ./app
+        
       - name: build
         run: npm --prefix ./app run build
       
