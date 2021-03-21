@@ -45,7 +45,7 @@ jobs:
           #cd ./app
       
       - name: build
-        run: STAGE=dev npm --prefix ./app run build
+        run: npm --prefix ./app run build
       
       - name: copy files to s3
         run: aws s3 sync ./dist s3://samurai-cs
