@@ -1,0 +1,44 @@
+name: s3 deployment
+
+on:
+  push:
+    branches:[main] # branch to run this
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # tells github where to build 
+
+    strategy:
+      matrix:
+        node-version: [8.x, 10.x, 12.x]
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Node setup
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{matrix.node-version}}
+    
+      - name: Configure AWS
+        uses: aws-actions/configure-aws-credentials@v1
+        with: 
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: npm install
+        run: npm i
+      
+      - name: build
+        run: STAGE=dev npm run build
+      
+      - name: copy files to s3
+        run: aws s3 sync ./dist s3://samurai-cs
+
+      - name: Invalidate cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id E3TER2DTNBN9AG \
+            --paths "/*"
