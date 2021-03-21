@@ -28,11 +28,14 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: npm install
+      - name: npm install # install npm on ubuntu
         run: npm i
+
+      - name: move to app folder
+          run: cd ./app
       
       - name: build
-        run: STAGE=dev npm --prefix ./app run build
+        run: STAGE=dev npm run build
       
       - name: copy files to s3
         run: aws s3 sync ./dist s3://samurai-cs
