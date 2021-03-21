@@ -19,7 +19,7 @@ jobs:
       - name: Node setup
         uses: actions/setup-node@v1
         with:
-          node-version: ${{matrix.node-version}}
+          node-version: 12
     
       - name: Configure AWS
         uses: aws-actions/configure-aws-credentials@v1
@@ -36,6 +36,9 @@ jobs:
 
       - name: npm install app
         run:  npm i ./app
+
+      - name: npm fix
+        run: npm audit fix
 
       #- name: move to app folder
         #run: | 
