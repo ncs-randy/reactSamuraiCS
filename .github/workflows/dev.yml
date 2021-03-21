@@ -2,7 +2,7 @@ name: s3 deployment
 
 on:
   push:
-    branches:[main] # branch to run this
+    branches: [main] # branch to run this
 
 jobs:
   build:
