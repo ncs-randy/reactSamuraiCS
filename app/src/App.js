@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import {Table, Button} from 'reactstrap';
 import {faThumbsUp,faThumbsDown,faSearchLocation,faLocationArrow} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Signup from "./Signup";
+import Login from "./login";
+
 
 class App extends Component {
     state = { 
@@ -91,7 +94,11 @@ class App extends Component {
                         </Table>
                     </div>
                 </div>
+               <div><Signup /></div> 
+               <div><Login /></div> 
             </div>
+           
+           
          );
     }
 }
