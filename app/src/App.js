@@ -83,7 +83,7 @@ class App extends Component {
                                 <th>Delivery #</th>
                                 <th>Receiver Name</th>
                                 <th>Receiver Address</th>
-                                <th>Sender</th>
+                                <th>Senders</th>
                                 <th colSpan='4'>Actions</th>
                                 </tr>
                             </thead>

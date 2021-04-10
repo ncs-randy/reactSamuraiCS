@@ -31,8 +31,8 @@ jobs:
       #- name: npm install jquery for bootstrap
       #  run: npm i jquery@1.9.1
 
-      #- name: npm install # install dependencies
-      #  run: npm i
+      - name: npm install # install dependencies
+        run: npm i
 
       - name: npm install app
         run:  npm i ./app
