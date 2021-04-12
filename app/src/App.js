@@ -4,6 +4,8 @@ import {faThumbsUp,faThumbsDown,faSearchLocation,faLocationArrow} from '@fortawe
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Signup from "./Signup";
 import Login from "./login";
+import axios from "axios";
+const config = require('./config.json');
 
 
 class App extends Component {
@@ -36,11 +38,21 @@ class App extends Component {
             }
         ] */
      }
+     fetchProducts = async () => {
+        try{
+            const response = await axios.get(`${config.api.invokeURL}/products`);
+            const deliveries = response.data;
+            this.setState({ deliveries: deliveries });
+        }catch(err){
+            console.log(`An error has occurred: ${err}`);
+        }
+     }
 
      async componentDidMount() {
-         const response = await fetch("https://wvhviz13k5.execute-api.ap-southeast-1.amazonaws.com/prod/products");
-         const body = await response.json();
-         this.setState({deliveries:body, isLoading:false});
+         //const response = await fetch("https://wvhviz13k5.execute-api.ap-southeast-1.amazonaws.com/prod/products");
+         //const body = await response.json();
+         //this.setState({deliveries:body, isLoading:false});
+         this.fetchProducts();
      }
 
     remove(id){
