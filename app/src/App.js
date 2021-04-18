@@ -2,15 +2,18 @@ import React, { Component } from 'react';
 import {Table, Button} from 'reactstrap';
 import {faThumbsUp,faThumbsDown,faSearchLocation,faLocationArrow} from '@fortawesome/free-solid-svg-icons'; /* , faBorderStyle, faLandmark */
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Redirect, Route, Router } from 'react-router-dom'
 import Signup from "./Signup";
 import Login from "./login";
+import UserPool from "./Userpool";
 import axios from "axios";
 const config = require('./config.json');
-
 
 class App extends Component {
     state = { 
         isLoading: false,
+        isAuth: false,
+        authUser: UserPool.getCurrentUser(),
         deliveries:[]
         /* deliveries:[
             {
@@ -63,9 +66,23 @@ class App extends Component {
     doNothing(){
 
     }
+
+    signOut() {
+        if(this.authUser != null) {
+            this.authUser.signOut();
+        }
+    }
+
     render() { 
         const isLoading = this.state.isLoading;
         const allDevliveries = this.state.deliveries;
+
+        //detect if current seesion is logged in]
+        if(this.authUser == null) {
+            return (
+                <Login />
+            )
+        }
 
         if (isLoading)
             return(<div>Loading...</div>);
@@ -114,8 +131,9 @@ class App extends Component {
                         </Table>
                     </div>
                 </div>
-               <div><Signup /></div> 
-               <div><Login /></div> 
+               {/* <div><Signup /></div> 
+               <div><Login /></div>  */}
+               <button onClick={this.doNothing()}>Sign Out</button>
             </div>
            
            

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { CognitoUser, AuthenticationDetails } from "amazon-cognito-identity-js";
+import App from './App';
 import UserPool from "./Userpool";
 
 const Login = () => {
@@ -22,6 +23,7 @@ const Login = () => {
     user.authenticateUser(authDetails, {
       onSuccess: (data) => {
         console.log("onSuccess: ", data);
+        <App />
       },
       onFailure: (err) => {
         console.error("onFailure: ", err);
