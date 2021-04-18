@@ -30,6 +30,9 @@ jobs:
 
       #- name: npm install jquery for bootstrap
       #  run: npm i jquery@1.9.1
+      
+      - name: npm config set package-lock true # set to true to generate package-lock.json on npm install
+        run: npm config set package-lock true
 
       - name: npm install # install dependencies
         run: npm i
