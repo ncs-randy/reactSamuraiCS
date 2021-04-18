@@ -37,11 +37,8 @@ jobs:
       - name: npm install # install dependencies
         run: npm i
 
-      - name: move to app folder
-        run: cd ./app
-
       - name: npm install app
-        run:  npm i
+        run:  cd ./app && npm i
 
       #- name: npm fix
       #  run: npm audit fix
@@ -50,13 +47,13 @@ jobs:
         #run: | 
           #cd ./app
       - name: npm ci
-        run: npm ci 
+        run: npm ci --prefix ./app
 
       - name: build
-        run: npm run build
+        run: npm --prefix ./app run build
       
       - name: copy files to s3
-        run: aws s3 sync ./build s3://samurai-cs
+        run: aws s3 sync ./app/build s3://samurai-cs
 
       - name: Invalidate cache
         run: |
