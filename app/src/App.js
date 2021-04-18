@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import {Table, Button} from 'reactstrap';
 import {faThumbsUp,faThumbsDown,faSearchLocation,faLocationArrow} from '@fortawesome/free-solid-svg-icons'; /* , faBorderStyle, faLandmark */
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Redirect, Route, Router } from 'react-router-dom'
+//import { Redirect, Route, Router } from 'react-router-dom'
 //import Signup from "./Signup";
-import Login from "./login";
-import UserPool from "./Userpool";
+//import Login from "./login";
+//import UserPool from "./Userpool";
 import axios from "axios";
 const config = require('./config.json');
 
