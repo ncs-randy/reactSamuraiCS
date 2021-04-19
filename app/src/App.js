@@ -1,6 +1,6 @@
 import React, { Component } from 'react'; 
 import {Table, Button} from 'reactstrap';
-import {faThumbsUp,faThumbsDown,faSearchLocation,faLocationArrow} from '@fortawesome/free-solid-svg-icons';
+import {faThumbsUp,faThumbsDown,faSearchLocation,faLocationArrow, faBorderStyle, faLandmark} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Redirect, Route, Router } from 'react-router-dom'
 import Signup from "./Signup";
@@ -12,7 +12,8 @@ class App extends Component {
         isLoading: false,
         isAuth: false,
         authUser: UserPool.getCurrentUser(),
-        deliveries:[
+        deliveries:[]
+        /* deliveries:[
             {
                 "orderID" : "100",
                 "deliveryID" : "SR1000001",
@@ -36,7 +37,13 @@ class App extends Component {
                 "Address" : "Yishun",
                 "Sender" : "Shopada"
             }
-        ]
+        ] */
+     }
+
+     async componentDidMount() {
+         const response = await fetch("https://wvhviz13k5.execute-api.ap-southeast-1.amazonaws.com/prod/products");
+         const body = await response.json();
+         this.setState({deliveries:body, isLoading:false});
      }
 
     remove(id){
@@ -70,12 +77,13 @@ class App extends Component {
 
         let deliveries = allDevliveries.map(
             delivery =>
-            <tr key={delivery.orderID}>
-                <td>{delivery.orderID}</td>
-                <td>{delivery.deliveryID}</td>
+            <tr key={delivery.id}>
+                <td>{delivery.id}</td>
+                <td>{delivery.productname}</td>
+                {/* <td>{delivery.deliveryID}</td>
                 <td>{delivery.Addressee}</td>
                 <td>{delivery.Address}</td>
-                <td>{delivery.Sender}</td>
+                <td>{delivery.Sender}</td> */}
                 <td><Button className="btn btn-lg btn-success" onClick={() => this.remove(delivery.orderID)}><FontAwesomeIcon icon={faThumbsUp}></FontAwesomeIcon> Delivered</Button></td>
                 <td><Button className="btn btn-lg btn-danger" onClick={() => this.doNothing()}><FontAwesomeIcon icon={faThumbsDown}></FontAwesomeIcon> Undelivered</Button></td>
                 <td><Button className="btn btn-lg btn-info" onClick={() => this.doNothing()}><FontAwesomeIcon icon={faSearchLocation}></FontAwesomeIcon> Search</Button></td>
@@ -98,9 +106,9 @@ class App extends Component {
                                 <tr>
                                 <th>Order #</th>
                                 <th>Delivery #</th>
-                                <th>Receiver Name</th>
+                                {/* <th>Receiver Name</th>
                                 <th>Receiver Address</th>
-                                <th>Senders</th>
+                                <th>Senders</th> */}
                                 <th colSpan='4'>Actions</th>
                                 </tr>
                             </thead>
