@@ -1,6 +1,6 @@
 import React, { Component } from 'react'; 
 import {Table, Button} from 'reactstrap';
-import {faThumbsUp,faThumbsDown,faSearchLocation,faLocationArrow, faBorderStyle, faLandmark} from '@fortawesome/free-solid-svg-icons';
+import {faThumbsUp,faThumbsDown,faSearchLocation,faLocationArrow} from '@fortawesome/free-solid-svg-icons'; /* , faBorderStyle, faLandmark */
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Redirect, Route, Router } from 'react-router-dom'
 import Signup from "./Signup";
