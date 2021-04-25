@@ -1,5 +1,10 @@
 {
     "api" : {
         "invokeURL": "https://wvhviz13k5.execute-api.ap-southeast-1.amazonaws.com/prod"
+    },
+    "cognito": {
+        "REGION": "ap-southeast-1",
+        "USER_POOL_ID": "ap-southeast-1_kxqPx8fd7",
+        "APP_CLIENT_ID": "6jfckaj8ckg3uclcd6q3cuu3lh"
     }
 }
