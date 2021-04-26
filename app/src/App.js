@@ -11,6 +11,7 @@ class App extends Component {
     state = { 
         isLoading: false,
         loggedInState: false,
+        isAuthenticating: true,
         user: null
     }
      
@@ -20,6 +21,19 @@ class App extends Component {
     
     setUser = user => {
         this.setState({ user: user });
+    }
+
+    async componentDidMount() {
+        try {
+            const currentSession = await Auth.currentSession();
+            console.log(currentSession);
+            this.setLoggedInState(true);
+            this.setUser(await Auth.currentAuthenticatedUser());
+            console.log(this.state.user);
+        } catch(error) {
+            console.error(error);
+        }
+        this.setState({ isAuthenticating: false });
     }
 
     signOut = async () => {
@@ -46,16 +60,20 @@ class App extends Component {
             return(<div>Loading...</div>);
 
         return ( 
+            !this.state.isAuthenticating &&
             <div>
                 <BrowserRouter>
                     <>
                         <Switch>
                         <Route exact path="/" render={(props) => 
                             (this.state.loggedInState ? <Delivery {...props} auth={authProps} /> : <Redirect to="/Login" />)
-                        }>  
-                        </Route>
-                        <Route path="/Login" render={(props) => <Login {...props} auth={authProps} />} />
-                        <Route path="/SignUp" render={(props) => <Signup {...props} auth={authProps} />} />
+                        } ></Route>
+                        <Route path="/Login" render={(props) => 
+                            (this.state.loggedInState ? <Redirect to="/" /> : <Login {...props} auth={authProps} /> )
+                        } ></Route>
+                        <Route path="/SignUp" render={(props) =>
+                            (this.state.loggedInState ? <Redirect to="/" /> : <Signup {...props} auth={authProps} /> )
+                        } ></Route>
                         </Switch>
                         
                     </>
