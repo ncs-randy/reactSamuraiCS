@@ -71,6 +71,8 @@ class Signup extends Component {
     // suggest if can delete unused code
     const { username, password } = this.state;
     try {
+      // Added custom:role
+      // Driver, Administrator
       const signUpResponse = await Auth.signUp({
         username,
         password,
@@ -78,7 +80,8 @@ class Signup extends Component {
           email: this.state.email,
           address: this.state.address,
           name: this.state.name,
-          phone_number: this.state.phonenumber
+          phone_number: this.state.phonenumber,
+          'custom:role': 'Driver'
         }
       });
       console.log(signUpResponse);

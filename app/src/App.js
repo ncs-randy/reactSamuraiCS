@@ -27,8 +27,13 @@ class App extends Component {
         try {
             const currentSession = await Auth.currentSession();
             console.log(currentSession);
-            this.setLoggedInState(true);
-            this.setUser(await Auth.currentAuthenticatedUser());
+            const user = await Auth.currentAuthenticatedUser();
+            // Added custom:role
+            // Driver, Administrator
+            if (user.attributes['custom:role'] === 'Driver') {
+                this.setLoggedInState(true);
+                this.setUser(user);
+            }
             console.log(this.state.user);
         } catch(error) {
             console.error(error);

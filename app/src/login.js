@@ -63,9 +63,13 @@ class Login extends Component {
     try {
       const user = await Auth.signIn(this.state.email, this.state.password);
       console.log(user);
-      this.props.auth.setLoggedInState(true);
-      this.props.auth.setUser(user);
-      this.props.history.push("/");
+      if (user.attributes['custom:role'] === 'Driver') {
+        this.props.auth.setLoggedInState(true);
+        this.props.auth.setUser(user);
+        this.props.history.push("/");
+      } else {
+        console.error("The user is not a driver.");
+      }
     } catch (error) {
       console.error(error);
     }
