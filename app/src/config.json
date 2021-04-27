@@ -1,6 +1,7 @@
 {
     "api" : {
-        "invokeURL": "https://wvhviz13k5.execute-api.ap-southeast-1.amazonaws.com/prod"
+        "invokeURL": "https://wvhviz13k5.execute-api.ap-southeast-1.amazonaws.com/prod",
+        "trackingIDURL":"https://4gkag3pogh.execute-api.ap-southeast-1.amazonaws.com/Production/trackingid?tracking="
     },
     "cognito": {
         "REGION": "ap-southeast-1",
