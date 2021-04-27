@@ -4,6 +4,7 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
 import Signup from "./Signup";
 import Login from "./login";
 import Delivery from "./Delivery"
+import Tracking from "./Tracking"
 import Auth from '@aws-amplify/auth';
 // import UserPool from "./Userpool";
 
@@ -78,6 +79,9 @@ class App extends Component {
                         } ></Route>
                         <Route path="/SignUp" render={(props) =>
                             (this.state.loggedInState ? <Redirect to="/" /> : <Signup {...props} auth={authProps} /> )
+                        } ></Route>
+                          <Route exact path="/Tracking" render={(props) => 
+                            ( <Tracking {...props} auth={authProps} />)
                         } ></Route>
                         </Switch>
                         
