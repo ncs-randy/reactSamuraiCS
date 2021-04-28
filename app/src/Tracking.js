@@ -121,6 +121,7 @@ class Tracking extends Component {
           <img
             className="row d-flex justify-content-center"
             src={Delivery_Animation}
+            alt=""
           />
         </div>
 
@@ -226,7 +227,7 @@ class Tracking extends Component {
             <div className="row justify-content-between top">
               <div className="row d-flex icon-content">
                 {" "}
-                <img className="icon" src="https://i.imgur.com/9nnc9Et.png" />
+                <img className="icon" src="https://i.imgur.com/9nnc9Et.png" alt="" />
                 <div className="d-flex flex-column">
                   <p className="font-weight-bold">
                     Order
@@ -237,7 +238,7 @@ class Tracking extends Component {
               </div>
               <div className="row d-flex icon-content">
                 {" "}
-                <img className="icon" src="https://i.imgur.com/u1AzR7w.png" />
+                <img className="icon" src="https://i.imgur.com/u1AzR7w.png" alt="" />
                 <div className="d-flex flex-column">
                   <p className="font-weight-bold">
                     Order
@@ -248,7 +249,7 @@ class Tracking extends Component {
               </div>
               <div className="row d-flex icon-content">
                 {" "}
-                <img className="icon" src="https://i.imgur.com/TkPm63y.png" />
+                <img className="icon" src="https://i.imgur.com/TkPm63y.png" alt="" />
                 <div className="d-flex flex-column">
                   <p className="font-weight-bold">
                     Order
@@ -259,7 +260,7 @@ class Tracking extends Component {
               </div>
               <div className="row d-flex icon-content">
                 {" "}
-                <img className="icon" src="https://i.imgur.com/HdsziHP.png" />
+                <img className="icon" src="https://i.imgur.com/HdsziHP.png" alt="" />
                 <div className="d-flex flex-column">
                   <p className="font-weight-bold">
                     Order
