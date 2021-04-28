@@ -6,7 +6,7 @@ import Delivery_Animation from "./images/Delivery_Animation.gif";
 import axios from "axios";
 const config = require("./config.json");
 
-class Tracking extends React.Component {
+class Tracking extends Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);

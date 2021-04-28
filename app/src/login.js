@@ -61,15 +61,23 @@ class Login extends Component {
     // becuase of developer have discontinued developing this library amazon-cognito-identity-js, and bug found when doing token verification
     // suggest if can delete unused code
     try {
-      const user = await Auth.signIn(this.state.email, this.state.password);
-      console.log(user);
-      if (user.attributes['custom:role'] === 'Driver') {
-        this.props.auth.setLoggedInState(true);
-        this.props.auth.setUser(user);
-        this.props.history.push("/");
-      } else {
-        console.error("The user is not a driver.");
-      }
+      await Auth.signIn(this.state.email, this.state.password).then((user) => {
+        console.log(user)
+        if (user.attributes['custom:role'] === 'Driver') {
+          this.props.auth.setLoggedInState(true);
+          this.props.auth.setUserDriver(true);
+          this.props.auth.setUser(user);
+          this.props.history.push("/Delivery");
+        } else if (user.attributes['custom:role'] === 'Administrator') {
+          this.props.auth.setLoggedInState(true);
+          this.props.auth.setUserAdmin(true);
+          this.props.auth.setUser(user);
+          this.props.history.push("/Admin"); // Redirect to admin related page // update the url once page created
+        }else {
+          console.error("The user is not a driver.");
+        }
+      });
+      
     } catch (error) {
       console.error(error);
     }
