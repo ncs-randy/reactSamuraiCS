@@ -72,13 +72,13 @@ class App extends Component {
                     <>
                         <Switch>
                         <Route exact path="/" render={(props) => 
-                            (this.state.loggedInState ? <Delivery {...props} auth={authProps} /> : <Redirect to="/Login" />)
+                            (this.state.loggedInState ? <Delivery {...props} /> : <Redirect to="/Login" />)
                         } ></Route>
                         <Route path="/Login" render={(props) => 
                             (this.state.loggedInState ? <Redirect to="/" /> : <Login {...props} auth={authProps} /> )
                         } ></Route>
                         <Route path="/SignUp" render={(props) =>
-                            (this.state.loggedInState ? <Redirect to="/" /> : <Signup {...props} auth={authProps} /> )
+                            (this.state.loggedInState ? <Redirect to="/" /> : <Signup {...props} /> )
                         } ></Route>
                           <Route exact path="/Tracking" render={(props) => 
                             ( <Tracking {...props} auth={authProps} />)

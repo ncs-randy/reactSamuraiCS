@@ -7,7 +7,6 @@ const config = require('./config.json');
 
 class Delivery extends Component {
     state = { 
-        isLoading: false,
         // isAuth: false,
         deliveries:[]
         /* deliveries:[
@@ -62,20 +61,10 @@ class Delivery extends Component {
 
     }
 
-    // signOut() {
-    //     if(this.state.authUser != null) {
-    //         this.state.authUser.signOut();
-    //         window.location.href = '/';
-    //     }
-    // }
-
     render() { 
         const isLoading = this.state.isLoading;
         const allDevliveries = this.state.deliveries;
         
-        if (isLoading)
-            return(<div>Loading...</div>);
-
         let deliveries = allDevliveries.map(
             delivery =>
             <tr key={delivery.id}>
