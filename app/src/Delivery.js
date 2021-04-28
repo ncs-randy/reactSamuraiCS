@@ -62,7 +62,6 @@ class Delivery extends Component {
     }
 
     render() { 
-        const isLoading = this.state.isLoading;
         const allDevliveries = this.state.deliveries;
         
         let deliveries = allDevliveries.map(
