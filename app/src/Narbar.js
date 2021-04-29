@@ -9,7 +9,7 @@ class Navbar extends Component {
             this.props.auth.setUser(null);
             this.props.auth.setUserDriver(false);
             this.props.auth.setUserAdmin(false);
-            this.props.history.push('/');
+            //this.props.history.push('/');
         } catch (error) {
             console.error(error);
         }
@@ -29,6 +29,18 @@ class Navbar extends Component {
                   <a href="/Tracking" className="navbar-item">
                     Delivery Tracking
                   </a>
+                  {this.props.auth.loggedInState && this.props.auth.isDriver && (
+                        <a href="/Delivery" className="navbar-item">
+                            Orders
+                        </a>
+                    )
+                  }
+                  {/* {this.props.auth.loggedInState && this.props.auth.isAdmin && (
+                        <a href="/Admin" className="navbar-item">
+                            Admin
+                        </a>
+                    )
+                  } */}
                 </div>
       
                 <div className="navbar-end">
