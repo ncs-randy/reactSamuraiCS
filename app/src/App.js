@@ -1,17 +1,13 @@
 import React, { Component } from 'react'; 
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
-// import { CognitoUser, CognitoUserSession } from "amazon-cognito-identity-js";
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import Signup from "./Signup";
 import Login from "./login";
-import Delivery from "./Delivery"
-import Tracking from "./Tracking"
-import Navbar from "./Narbar"
+import Delivery from "./Delivery";
+import Tracking from "./Tracking";
+import Navbar from "./Narbar";
+import NotFound from './404';
 import Auth from '@aws-amplify/auth';
-// import UserPool from "./Userpool";
-// import './App.css';
-// import { library } from '@fortawesome/fontawesome-svg-core';
-// import { faEdit } from '@fortawesome/free-solid-svg-icons';
-// library.add(faEdit);
+import './App.css';
 
 class App extends Component {
     state = { 
@@ -143,7 +139,10 @@ class App extends Component {
                         
                         {/* Temporary route create here for admin related componect
                         Add/edit once created related component */}
-                        {/* <Route exact path="/Admin" render={(props) => this.switchPageFromOther("Admin", props)} ></Route>  */}
+                        <Route exact path="/Admin" render={(props) => this.switchPageFromOther("Admin", props)} ></Route> 
+
+                        {/* Route to 404 if invalid url detected */}
+                        <Route component={NotFound} />
 
                         </Switch>
                         

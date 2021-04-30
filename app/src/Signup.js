@@ -1,15 +1,7 @@
 import React, { Component } from "react";
 import { Auth } from 'aws-amplify'
-// const AmazonCognitoIdentity = require('amazon-cognito-identity-js'); 
 
 class Signup extends Component {
-  // const [email, setEmail] = useState("");
-  // const [address, setAddress] = useState("");
-  // const [name, setName] = useState("");
-  // const [username, setUsername] = useState("");
-  // const [phonenumber, setPhonenumber] = useState("");
-  // const [password, setPassword] = useState("");
-
   state ={
     email: "",
     address: "",
@@ -27,48 +19,10 @@ class Signup extends Component {
   }
 
   onSubmit = async (event) => {
-    // var attributeList = [];
-    // var dataEmail ={
-    //     Name:"email",
-    //     Value:email
-    // };
-
-    // var dataAddress ={
-    //     Name:"address",Value:address
-    // };
-
-    // var dataName ={
-    //     Name:"name",Value:name
-    // };
-
-    // var dataPhonenumber ={
-    //     Name:"phone_number",Value:phonenumber
-    // };
-
-    // var attributeEmail = new AmazonCognitoIdentity.CognitoUserAttribute(dataEmail);
-    // var attributeAddress = new AmazonCognitoIdentity.CognitoUserAttribute(dataAddress);
-    // var attributeName = new AmazonCognitoIdentity.CognitoUserAttribute(dataName);
-    // var attributePhonenumber = new AmazonCognitoIdentity.CognitoUserAttribute(dataPhonenumber);
-
-    
-    // attributeList.push(attributeEmail);
-    // attributeList.push(attributeAddress);
-    // attributeList.push(attributeName);
-    // attributeList.push(attributePhonenumber);
-
-    
     event.preventDefault();
-
-    // UserPool.signUp(username, password, attributeList, null, (err, data) => {
-    //   if (err) {
-    //     console.error(err);
-    //   }
-    //   console.log(data);
-    // });
 
     // change from amazon-cognito-identity-js to aws-amplify
     // becuase of developer have discontinued developing this library amazon-cognito-identity-js, and bug found when doing token verification
-    // suggest if can delete unused code
     const { username, password } = this.state;
     try {
       // Added custom:role
