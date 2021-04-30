@@ -85,24 +85,68 @@ class Login extends Component {
   render() {
     return (
       
-      <div>
-        <form onSubmit={this.onSubmit}>
-          <label htmlFor="email">Email/Username</label>
-          <input
-            id="email"
-            value={this.state.email}
-            onChange={(event) => this.onInputChange(event)}> 
-          </input>
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            value={this.state.password}
-            onChange={(event) => this.onInputChange(event)}>
-          </input>
+      // <div>
+      //   <form onSubmit={this.onSubmit}>
+      //     <label htmlFor="email">Email/Username</label>
+      //     <input
+      //       id="email"
+      //       value={this.state.email}
+      //       onChange={(event) => this.onInputChange(event)}> 
+      //     </input>
+      //     <label htmlFor="password">Password</label>
+      //     <input
+      //       id="password"
+      //       value={this.state.password}
+      //       onChange={(event) => this.onInputChange(event)}>
+      //     </input>
 
-          <button type="submit">Login</button>
-        </form>
-      </div>
+      //     <button type="submit">Login</button>
+      //   </form>
+      // </div>
+
+      <section className="section auth">
+        <div className="container">
+          <h1>Log in</h1>
+          
+          <form onSubmit={this.onSubmit}>
+            <div className="field">
+              <p className="control">
+                <input 
+                  className="input" 
+                  type="text"
+                  id="email"
+                  placeholder="Email/Username"
+                  value={this.state.email}
+                  onChange={(event) => this.onInputChange(event)}
+                />
+              </p>
+            </div>
+            <div className="field">
+              <p className="control">
+                <input 
+                  className="input" 
+                  type="password"
+                  id="password"
+                  placeholder="Password"
+                  value={this.state.password}
+                  onChange={(event) => this.onInputChange(event)}
+                />
+                {/* <span className="icon is-small is-left">
+                  <i className="fas fa-lock"></i>
+                </span> */}
+              </p>
+            </div>
+            
+            <div className="field">
+              <p className="control">
+                <button className="button is-success">
+                  Login
+                </button>
+              </p>
+            </div>
+          </form>
+        </div>
+      </section>
     );
   }
 };

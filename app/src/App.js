@@ -8,6 +8,10 @@ import Tracking from "./Tracking"
 import Navbar from "./Narbar"
 import Auth from '@aws-amplify/auth';
 // import UserPool from "./Userpool";
+// import './App.css';
+// import { library } from '@fortawesome/fontawesome-svg-core';
+// import { faEdit } from '@fortawesome/free-solid-svg-icons';
+// library.add(faEdit);
 
 class App extends Component {
     state = { 
@@ -126,7 +130,7 @@ class App extends Component {
 
         return ( 
             !this.state.isAuthenticating &&
-            <div>
+            <div className="App">
                 <BrowserRouter>
                     <div>
                         <Navbar auth={authProps} />
