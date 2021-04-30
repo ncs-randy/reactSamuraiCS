@@ -5,8 +5,13 @@ import Signup from "./Signup";
 import Login from "./login";
 import Delivery from "./Delivery"
 import Tracking from "./Tracking"
+import Navbar from "./Narbar"
 import Auth from '@aws-amplify/auth';
 // import UserPool from "./Userpool";
+// import './App.css';
+// import { library } from '@fortawesome/fontawesome-svg-core';
+// import { faEdit } from '@fortawesome/free-solid-svg-icons';
+// library.add(faEdit);
 
 class App extends Component {
     state = { 
@@ -63,19 +68,7 @@ class App extends Component {
         this.setState({ isAuthenticating: false });
     }
 
-    signOut = async () => {
-        try {
-            Auth.signOut();
-            this.setLoggedInState(false);
-            this.setUser(null);
-            this.setUserDriver(false);
-            this.setUserAdmin(false);
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
-    // 
+    // use only for routes Login and Signup
     switchPageFromLoginSignup(page, props, authProps) {
         console.log(this.state.loggedInState);
         console.log(this.state.user);
@@ -94,6 +87,7 @@ class App extends Component {
         return (<Redirect to="/" />);
     }
 
+    // use only for other routes @params page, hardcode into this when created new component
     switchPageFromOther(page, props) {
         console.log(this.state)
         if (this.state.loggedInState) { 
@@ -136,9 +130,10 @@ class App extends Component {
 
         return ( 
             !this.state.isAuthenticating &&
-            <div>
+            <div className="App">
                 <BrowserRouter>
-                    <>
+                    <div>
+                        <Navbar auth={authProps} />
                         <Switch>
                         <Route exact path="/" render={(props) => <Tracking {...props} /> } ></Route>
                         <Route path="/Login" render={(props) => this.switchPageFromLoginSignup("Login", props, authProps)} ></Route>
@@ -152,11 +147,8 @@ class App extends Component {
 
                         </Switch>
                         
-                    </>
+                    </div>
                 </BrowserRouter>
-                {this.state.loggedInState && (
-                    <button onClick={this.signOut}>Sign Out</button>
-                )}
             </div>
            
            

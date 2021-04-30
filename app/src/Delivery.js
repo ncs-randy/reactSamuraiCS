@@ -81,9 +81,9 @@ class Delivery extends Component {
         )
 
         return ( 
-            <div className="container border border-secondary rounded center">
+            <div className="container border center">
                 <div className="row">
-                    <div className="col-12">
+                    <div className="col-12 text-center">
                         <h4>Pending Deliveries</h4>
                     </div>
                 </div>
