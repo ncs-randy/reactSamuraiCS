@@ -1,14 +1,8 @@
 import React, { Component } from "react";
-// import { CognitoUser, AuthenticationDetails } from "amazon-cognito-identity-js";
-import { Auth } from "aws-amplify"
-// import App from './App';
-// import UserPool from "./Userpool";
-// import Delivery from "./Delivery"
-// import Signup from "./Signup";
+import { Auth } from "aws-amplify";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class Login extends Component {
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
   state = {
     email: "",
     password: ""
@@ -24,42 +18,8 @@ class Login extends Component {
   onSubmit = async (event) => {
     event.preventDefault();
 
-    // const user = new CognitoUser({
-    //   Username: email,
-    //   Pool: UserPool,
-    // });
-
-    // const authDetails = new AuthenticationDetails({
-    //   Username: email,
-    //   Password: password,
-    // });
-
-    // user.authenticateUser(authDetails, {
-    //   onSuccess: (data) => {
-    //     console.log("onSuccess: ", data);
-    //     // console.log(UserPool.getCurrentUser());
-    //     const tokens = {
-    //       IdToken: data.getIdToken().getJwtToken(),
-    //       AccessToken: data.getAccessToken().getJwtToken(),
-    //       RefreshToken: data.getRefreshToken().getToken()
-    //     };
-    //     //user['tokens'] = tokens;
-    //     sessionStorage.setItem('loggedInUser', JSON.stringify(tokens));
-    //     sessionStorage.setItem('email', email);
-    //     //console.log(sessionStorage.getItem('loggedInUser'));
-    //     //window.location.href = '/';
-    //   },
-    //   onFailure: (err) => {
-    //     console.error("onFailure: ", err);
-    //   },
-    //   newPasswordRequired: (data) => {
-    //     console.log("newPasswordRequired: ", data);
-    //   },
-    // });
-
     // change from amazon-cognito-identity-js to aws-amplify
     // becuase of developer have discontinued developing this library amazon-cognito-identity-js, and bug found when doing token verification
-    // suggest if can delete unused code
     try {
       await Auth.signIn(this.state.email, this.state.password).then((user) => {
         console.log(user)
@@ -84,33 +44,13 @@ class Login extends Component {
   };
   render() {
     return (
-      
-      // <div>
-      //   <form onSubmit={this.onSubmit}>
-      //     <label htmlFor="email">Email/Username</label>
-      //     <input
-      //       id="email"
-      //       value={this.state.email}
-      //       onChange={(event) => this.onInputChange(event)}> 
-      //     </input>
-      //     <label htmlFor="password">Password</label>
-      //     <input
-      //       id="password"
-      //       value={this.state.password}
-      //       onChange={(event) => this.onInputChange(event)}>
-      //     </input>
-
-      //     <button type="submit">Login</button>
-      //   </form>
-      // </div>
-
       <section className="section auth">
         <div className="container">
           <h1>Log in</h1>
           
           <form onSubmit={this.onSubmit}>
             <div className="field">
-              <p className="control">
+              <p className="control has-icons-left">
                 <input 
                   className="input" 
                   type="text"
@@ -119,10 +59,14 @@ class Login extends Component {
                   value={this.state.email}
                   onChange={(event) => this.onInputChange(event)}
                 />
+                <span className="icon is-small is-left">
+                  {/* <i className="fas fa-lock"></i> */}
+                  <FontAwesomeIcon icon="user" />
+                </span>
               </p>
             </div>
             <div className="field">
-              <p className="control">
+              <p className="control has-icons-left">
                 <input 
                   className="input" 
                   type="password"
@@ -131,9 +75,9 @@ class Login extends Component {
                   value={this.state.password}
                   onChange={(event) => this.onInputChange(event)}
                 />
-                {/* <span className="icon is-small is-left">
-                  <i className="fas fa-lock"></i>
-                </span> */}
+                <span className="icon is-small is-left">
+                  <FontAwesomeIcon icon="lock" />
+                </span>
               </p>
             </div>
             

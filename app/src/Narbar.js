@@ -35,12 +35,12 @@ class Navbar extends Component {
                         </a>
                     )
                   }
-                  {/* {this.props.auth.loggedInState && this.props.auth.isAdmin && (
+                  {this.props.auth.loggedInState && this.props.auth.isAdmin && (
                         <a href="/Admin" className="navbar-item">
                             Admin
                         </a>
                     )
-                  } */}
+                  }
                 </div>
       
                 <div className="navbar-end">
