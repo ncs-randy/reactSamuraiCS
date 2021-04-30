@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Table } from "reactstrap";
 import "./App.css";
+import 'font-awesome/css/font-awesome.min.css';
 import Delivery_Animation from "./images/Delivery_Animation.gif";
 
 import axios from "axios";
@@ -232,7 +233,7 @@ class Tracking extends Component {
                   <p className="font-weight-bold">
                     Order
                     <br />
-                    Processed
+                    Recieved
                   </p>
                 </div>
               </div>
@@ -241,9 +242,9 @@ class Tracking extends Component {
                 <img className="icon" src="https://i.imgur.com/u1AzR7w.png" alt="" />
                 <div className="d-flex flex-column">
                   <p className="font-weight-bold">
-                    Order
+                    Parcel Arrived at
                     <br />
-                    Shipped
+                    SCS Sorting Center
                   </p>
                 </div>
               </div>
@@ -252,9 +253,9 @@ class Tracking extends Component {
                 <img className="icon" src="https://i.imgur.com/TkPm63y.png" alt="" />
                 <div className="d-flex flex-column">
                   <p className="font-weight-bold">
-                    Order
+                    Parcel
                     <br />
-                    En Route
+                    Scheduled for Delivery
                   </p>
                 </div>
               </div>
@@ -263,9 +264,9 @@ class Tracking extends Component {
                 <img className="icon" src="https://i.imgur.com/HdsziHP.png" alt="" />
                 <div className="d-flex flex-column">
                   <p className="font-weight-bold">
-                    Order
+                    Parcel 
                     <br />
-                    Arrived
+                    Delivered
                   </p>
                 </div>
               </div>
