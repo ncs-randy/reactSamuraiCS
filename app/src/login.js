@@ -60,7 +60,6 @@ class Login extends Component {
                   onChange={(event) => this.onInputChange(event)}
                 />
                 <span className="icon is-small is-left">
-                  {/* <i className="fas fa-lock"></i> */}
                   <FontAwesomeIcon icon="user" />
                 </span>
               </p>

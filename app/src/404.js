@@ -13,11 +13,11 @@ class NotFound extends Component {
                                 <h2>
                                     404 Not Found</h2>
                                 <div class="error-details">
-                                    Sorry, an error has occured, Requested page not found!
+                                    The page you are looking at does not exist, or other error has occured.
                                 </div>
                                 <div class="error-actions">
                                     <a href="/" class="button is-primary">
-                                        Home </a>
+                                        Back to SCS </a>
                                 </div>
                             </div>
                         </div>
