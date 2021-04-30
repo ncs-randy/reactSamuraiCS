@@ -19,6 +19,11 @@ class Tracking extends Component {
     events: [],
     value: "",
     trackingid: "",
+    classname1:"step0",
+    classname2:"step0",
+    classname3:"step0",
+    classname4:"step0",
+    classname5:"step0",
   };
 
   handleChange(event) {
@@ -55,6 +60,45 @@ class Tracking extends Component {
       //   console.log(`${config.api.trackingIDURL}` + trackingid);
       //   console.log(response);
       const events = response.data;
+      console.log(events);
+      if(events.length === 1){
+        this.setState({ classname1:"active step0" });
+
+      }
+
+      if((events.length === 2)){
+        this.setState({ classname1:"active step0" });
+        this.setState({ classname2:"active step0" });
+
+      }
+
+      if((events.length === 3)){
+        this.setState({ classname1:"active step0" });
+        this.setState({ classname2:"active step0" });
+        this.setState({ classname3:"active step0" });
+
+      }
+
+      if((events.length === 4)){
+        this.setState({ classname1:"active step0" });
+        this.setState({ classname2:"active step0" });
+        this.setState({ classname3:"active step0" });
+        this.setState({ classname4:"active step0" });
+
+      }
+
+      if((events.length === 5)){
+        this.setState({ classname1:"active step0" });
+        this.setState({ classname2:"active step0" });
+        this.setState({ classname3:"active step0" });
+        this.setState({ classname4:"active step0" });
+        this.setState({ classname5:"active step0" });
+
+      }
+
+
+
+      console.log(this.state.classname4);
       //   const events = [
       //     {
       //       TrackingID: "SCS_yhj61kwtscsko02tsqc",
@@ -218,10 +262,11 @@ class Tracking extends Component {
             <div className="row d-flex justify-content-center">
               <div className="col-12">
                 <ul id="progressbar" className="text-center">
-                  <li className="active step0"></li>
-                  <li className="active step0"></li>
-                  <li className="active step0"></li>
-                  <li className="step0"></li>
+                  <li className={this.state.classname1}></li>
+                  <li className={this.state.classname2}></li>
+                  <li className={this.state.classname3}></li>
+                  <li className={this.state.classname4}></li>
+                  <li className={this.state.classname5}></li>
                 </ul>
               </div>
             </div>
@@ -242,9 +287,11 @@ class Tracking extends Component {
                 <img className="icon" src="https://i.imgur.com/u1AzR7w.png" alt="" />
                 <div className="d-flex flex-column">
                   <p className="font-weight-bold">
-                    Parcel Arrived at
+                    Parcel Arrived 
                     <br />
-                    SCS Sorting Center
+                    at SCS
+                    <br />
+                     Sorting Center
                   </p>
                 </div>
               </div>
@@ -255,7 +302,22 @@ class Tracking extends Component {
                   <p className="font-weight-bold">
                     Parcel
                     <br />
-                    Scheduled for Delivery
+                    Scheduled 
+                    <br />
+                  for Delivery
+                  </p>
+                </div>
+              </div>
+              <div className="row d-flex icon-content">
+                {" "}
+                <img className="icon" src="https://www.flaticon.com/svg/vstatic/svg/318/318350.svg?token=exp=1619771950~hmac=b98c02f1229fe0babf57a8a43f877cbd" alt="" />
+                <div className="d-flex flex-column">
+                  <p className="font-weight-bold">
+                    Parcel 
+                    <br />
+                    Next to be
+                    <br />
+                    Delivered
                   </p>
                 </div>
               </div>
