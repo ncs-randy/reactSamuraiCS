@@ -337,7 +337,7 @@ class Tracking extends Component {
                 {" "}
                 <img
                   className="icon"
-                  src="https://www.flaticon.com/svg/vstatic/svg/318/318350.svg?token=exp=1619771950~hmac=b98c02f1229fe0babf57a8a43f877cbd"
+                  src="https://img.icons8.com/ios-filled/344/next-location.png"
                   alt=""
                 />
                 <div className="d-flex flex-column">
