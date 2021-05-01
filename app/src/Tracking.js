@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Table } from "reactstrap";
 import "./App.css";
-import 'font-awesome/css/font-awesome.min.css';
+import "font-awesome/css/font-awesome.min.css";
 import Delivery_Animation from "./images/Delivery_Animation.gif";
 
 import axios from "axios";
@@ -19,11 +19,12 @@ class Tracking extends Component {
     events: [],
     value: "",
     trackingid: "",
-    classname1:"step0",
-    classname2:"step0",
-    classname3:"step0",
-    classname4:"step0",
-    classname5:"step0",
+    classname1: "step0",
+    classname2: "step0",
+    classname3: "step0",
+    classname4: "step0",
+    classname5: "step0",
+    showTable: true,
   };
 
   handleChange(event) {
@@ -31,8 +32,21 @@ class Tracking extends Component {
   }
 
   handleSubmit(event) {
-    alert("Tracking ID is submitted: " + this.state.value);
-    console.log(this.state.value);
+    if (this.state.events.length > 0) {
+      this.setState({ events: [] });
+      this.setState({
+        classname1: "step0",
+        classname2: "step0",
+        classname3: "step0",
+        classname4: "step0",
+        classname5: "step0",
+      });
+    }
+
+    this.setState({ showTable: false });
+    this.setState({ value: "" });
+    //alert("Tracking ID is submitted: " + this.state.value);
+    //  console.log(this.state.value);
     // try {
     //   const trackingid = this.state.value;
     //   const response = axios.get(`${config.api.trackingIDURL}` + trackingid);
@@ -45,6 +59,7 @@ class Tracking extends Component {
     //   console.log(`An error has occurred: ${err}`);
     // }
     this.fetchEvents();
+
     event.preventDefault();
   }
 
@@ -60,45 +75,37 @@ class Tracking extends Component {
       //   console.log(`${config.api.trackingIDURL}` + trackingid);
       //   console.log(response);
       const events = response.data;
-      console.log(events);
-      if(events.length === 1){
-        this.setState({ classname1:"active step0" });
-
+      // console.log(events);
+      if (events.length === 1) {
+        this.setState({ classname1: "active step0" });
       }
 
-      if((events.length === 2)){
-        this.setState({ classname1:"active step0" });
-        this.setState({ classname2:"active step0" });
-
+      if (events.length === 2) {
+        this.setState({ classname1: "active step0" });
+        this.setState({ classname2: "active step0" });
       }
 
-      if((events.length === 3)){
-        this.setState({ classname1:"active step0" });
-        this.setState({ classname2:"active step0" });
-        this.setState({ classname3:"active step0" });
-
+      if (events.length === 3) {
+        this.setState({ classname1: "active step0" });
+        this.setState({ classname2: "active step0" });
+        this.setState({ classname3: "active step0" });
       }
 
-      if((events.length === 4)){
-        this.setState({ classname1:"active step0" });
-        this.setState({ classname2:"active step0" });
-        this.setState({ classname3:"active step0" });
-        this.setState({ classname4:"active step0" });
-
+      if (events.length === 4) {
+        this.setState({ classname1: "active step0" });
+        this.setState({ classname2: "active step0" });
+        this.setState({ classname3: "active step0" });
+        this.setState({ classname4: "active step0" });
       }
 
-      if((events.length === 5)){
-        this.setState({ classname1:"active step0" });
-        this.setState({ classname2:"active step0" });
-        this.setState({ classname3:"active step0" });
-        this.setState({ classname4:"active step0" });
-        this.setState({ classname5:"active step0" });
-
+      if (events.length === 5) {
+        this.setState({ classname1: "active step0" });
+        this.setState({ classname2: "active step0" });
+        this.setState({ classname3: "active step0" });
+        this.setState({ classname4: "active step0" });
+        this.setState({ classname5: "active step0" });
       }
 
-
-
-      console.log(this.state.classname4);
       //   const events = [
       //     {
       //       TrackingID: "SCS_yhj61kwtscsko02tsqc",
@@ -106,6 +113,7 @@ class Tracking extends Component {
       //       EventTimeStamp: "27/04/2021, 21:40:12",
       //     },
       //   ];
+
       this.setState({ events: events });
     } catch (err) {
       console.log(`An error has occurred: ${err}`);
@@ -135,7 +143,6 @@ class Tracking extends Component {
   render() {
     const isLoading = this.state.isLoading;
     const allEvents = this.state.events;
-
     //detect if current seesion is logged in]
     // if(this.authUser == null) {
     //     return (
@@ -202,7 +209,10 @@ class Tracking extends Component {
           </form>
         </div>
 
-        <div className="container border border-secondary rounded center">
+        <div
+          className="container border border-secondary rounded center"
+          style={{ display: this.state.showTable ? "none" : "block" }}
+        >
           <div className="row">
             <div className="col-12">
               <h5>
@@ -242,7 +252,10 @@ class Tracking extends Component {
           </div>
         </div>
 
-        <div className="container px-1 px-md-4 py-5 mx-auto">
+        <div
+          className="container px-1 px-md-4 py-5 mx-auto"
+          style={{ display: this.state.showTable ? "none" : "block" }}
+        >
           <div className="card">
             <div className="row d-flex justify-content-between px-3 top">
               <div className="d-flex">
@@ -255,7 +268,7 @@ class Tracking extends Component {
               </div>
               <div className="d-flex flex-column text-sm-right">
                 <p className="mb-0">
-                  Expected Arrival <span>01/12/19</span>
+                  {/* Expected Arrival <span>01/12/19</span> */}
                 </p>
               </div>
             </div>
@@ -273,7 +286,11 @@ class Tracking extends Component {
             <div className="row justify-content-between top">
               <div className="row d-flex icon-content">
                 {" "}
-                <img className="icon" src="https://i.imgur.com/9nnc9Et.png" alt="" />
+                <img
+                  className="icon"
+                  src="https://i.imgur.com/9nnc9Et.png"
+                  alt=""
+                />
                 <div className="d-flex flex-column">
                   <p className="font-weight-bold">
                     Order
@@ -284,36 +301,48 @@ class Tracking extends Component {
               </div>
               <div className="row d-flex icon-content">
                 {" "}
-                <img className="icon" src="https://i.imgur.com/u1AzR7w.png" alt="" />
+                <img
+                  className="icon"
+                  src="https://i.imgur.com/u1AzR7w.png"
+                  alt=""
+                />
                 <div className="d-flex flex-column">
                   <p className="font-weight-bold">
-                    Parcel Arrived 
+                    Parcel Arrived
                     <br />
                     at SCS
                     <br />
-                     Sorting Center
+                    Sorting Center
                   </p>
                 </div>
               </div>
               <div className="row d-flex icon-content">
                 {" "}
-                <img className="icon" src="https://i.imgur.com/TkPm63y.png" alt="" />
+                <img
+                  className="icon"
+                  src="https://i.imgur.com/TkPm63y.png"
+                  alt=""
+                />
                 <div className="d-flex flex-column">
                   <p className="font-weight-bold">
                     Parcel
                     <br />
-                    Scheduled 
+                    Scheduled
                     <br />
-                  for Delivery
+                    for Delivery
                   </p>
                 </div>
               </div>
               <div className="row d-flex icon-content">
                 {" "}
-                <img className="icon" src="https://www.flaticon.com/svg/vstatic/svg/318/318350.svg?token=exp=1619771950~hmac=b98c02f1229fe0babf57a8a43f877cbd" alt="" />
+                <img
+                  className="icon"
+                  src="https://www.flaticon.com/svg/vstatic/svg/318/318350.svg?token=exp=1619771950~hmac=b98c02f1229fe0babf57a8a43f877cbd"
+                  alt=""
+                />
                 <div className="d-flex flex-column">
                   <p className="font-weight-bold">
-                    Parcel 
+                    Parcel
                     <br />
                     Next to be
                     <br />
@@ -323,10 +352,14 @@ class Tracking extends Component {
               </div>
               <div className="row d-flex icon-content">
                 {" "}
-                <img className="icon" src="https://i.imgur.com/HdsziHP.png" alt="" />
+                <img
+                  className="icon"
+                  src="https://i.imgur.com/HdsziHP.png"
+                  alt=""
+                />
                 <div className="d-flex flex-column">
                   <p className="font-weight-bold">
-                    Parcel 
+                    Parcel
                     <br />
                     Delivered
                   </p>
