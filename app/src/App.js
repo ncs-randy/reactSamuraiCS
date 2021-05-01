@@ -37,8 +37,7 @@ class App extends Component {
 
     async componentDidMount() {
         try {
-            const currentSession = await Auth.currentSession();
-            console.log(currentSession);
+            await Auth.currentSession();
             const user = await Auth.currentAuthenticatedUser();
             // Added custom:role
             // Driver, Administrator
@@ -54,7 +53,7 @@ class App extends Component {
             }
             console.log(this.state.user);
         } catch(error) {
-            console.error(error);
+            //console.error(error);
             Auth.signOut();
             this.setLoggedInState(false);
             this.setUser(null);
@@ -66,8 +65,6 @@ class App extends Component {
 
     // use only for routes Login and Signup
     switchPageFromLoginSignup(page, props, authProps) {
-        console.log(this.state.loggedInState);
-        console.log(this.state.user);
         if (this.state.loggedInState) {
             if (this.state.isDriver) {
                 return (<Redirect to="/Delivery" />);
@@ -85,7 +82,6 @@ class App extends Component {
 
     // use only for other routes @params page, hardcode into this when created new component
     switchPageFromOther(page, props) {
-        console.log(this.state)
         if (this.state.loggedInState) { 
             if (page === "Delivery") {
                 if (this.state.isDriver) {
@@ -118,8 +114,6 @@ class App extends Component {
             setUserAdmin: this.setUserAdmin,
             setUser: this.setUser
         }
-        console.log(this.state.loggedInState)
-        console.log(this.state.user)
         
         if (isLoading)
             return(<div>Loading...</div>);

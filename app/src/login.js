@@ -1,53 +1,78 @@
 import React, { Component } from "react";
 import { Auth } from "aws-amplify";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Validation from './Validation';
+import FormErrors from './FormError';
 
 class Login extends Component {
   state = {
     email: "",
-    password: ""
+    password: "",
+    errorMsg: []
   }
+
+  clearErrorState = () => {
+    this.setState({
+      errorMsg: []
+    });
+  };
 
   onInputChange = event => {
     this.setState({
       [event.target.id]: event.target.value
     });
-    //document.getElementById(event.target.id).classList.remove("is-danger");
+    document.getElementById(event.target.id).classList.remove("is-danger");
   };
+
+  waitToLogin = async (bool) => {
+    if (bool) {
+      // change from amazon-cognito-identity-js to aws-amplify
+      // becuase of developer have discontinued developing this library amazon-cognito-identity-js, and bug found when doing token verification
+      try {
+        await Auth.signIn(this.state.email, this.state.password).then((user) => {
+          console.log(user)
+          if (user.attributes['custom:role'] === 'Driver') {
+            this.props.auth.setLoggedInState(true);
+            this.props.auth.setUserDriver(true);
+            this.props.auth.setUser(user);
+            this.props.history.push("/Delivery");
+          } else if (user.attributes['custom:role'] === 'Administrator') {
+            this.props.auth.setLoggedInState(true);
+            this.props.auth.setUserAdmin(true);
+            this.props.auth.setUser(user);
+            this.props.history.push("/Admin"); // Redirect to admin related page // update the url once page created
+          }else {
+            //console.error("The user is not a driver.");
+            this.setState({ errorMsg : ["This user is not a driver."] });
+          }
+        });
+        
+      } catch (error) {
+        //console.error(error);
+        this.setState({ errorMsg : [error.message] });
+      }
+    }
+  }
   
   onSubmit = async (event) => {
     event.preventDefault();
+    this.clearErrorState();
 
-    // change from amazon-cognito-identity-js to aws-amplify
-    // becuase of developer have discontinued developing this library amazon-cognito-identity-js, and bug found when doing token verification
-    try {
-      await Auth.signIn(this.state.email, this.state.password).then((user) => {
-        console.log(user)
-        if (user.attributes['custom:role'] === 'Driver') {
-          this.props.auth.setLoggedInState(true);
-          this.props.auth.setUserDriver(true);
-          this.props.auth.setUser(user);
-          this.props.history.push("/Delivery");
-        } else if (user.attributes['custom:role'] === 'Administrator') {
-          this.props.auth.setLoggedInState(true);
-          this.props.auth.setUserAdmin(true);
-          this.props.auth.setUser(user);
-          this.props.history.push("/Admin"); // Redirect to admin related page // update the url once page created
-        }else {
-          console.error("The user is not a driver.");
+    Validation(this.state)
+      .then(error => {
+        this.setState({ errorMsg: error });
+        if (error.length === 0) {
+          this.waitToLogin(true);
         }
-      });
-      
-    } catch (error) {
-      console.error(error);
-    }
+      })
+      .catch(() => this.setState({ errorMsg : ["Something went wrong, please refresh page and try again."] }))
   };
   render() {
     return (
       <section className="section auth">
         <div className="container">
           <h1>Log in</h1>
-          
+          <FormErrors formerrors={this.state.errorMsg} />
           <form onSubmit={this.onSubmit}>
             <div className="field">
               <p className="control has-icons-left">
