@@ -3,8 +3,8 @@ import { Component } from "react";
 import { Line } from "react-chartjs-2";
 import { MDBContainer } from "mdbreact";
 import { Tabs, Tab, Row, Col } from "react-bootstrap";
-import axios from "axios";
-const config = require("./config.json");
+// import axios from "axios";
+// const config = require("./config.json");
 
 class Admin extends Component {
   state = {
