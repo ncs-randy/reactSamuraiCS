@@ -1,22 +1,23 @@
 import React, { Component } from "react";
-import { Auth } from 'aws-amplify'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Auth } from "aws-amplify";
 
 class Signup extends Component {
-  state ={
+  state = {
     email: "",
     address: "",
     name: "",
     username: "",
     phonenumber: "",
-    password: ""
-  }
+    password: "",
+  };
 
-  onInputChange = event => {
+  onInputChange = (event) => {
     this.setState({
-      [event.target.id]: event.target.value
+      [event.target.id]: event.target.value,
     });
     //document.getElementById(event.target.id).classList.remove("is-danger");
-  }
+  };
 
   onSubmit = async (event) => {
     event.preventDefault();
@@ -35,61 +36,126 @@ class Signup extends Component {
           address: this.state.address,
           name: this.state.name,
           phone_number: this.state.phonenumber,
-          'custom:role': 'Driver'
-        }
+          "custom:role": "Driver",
+        },
       });
       console.log(signUpResponse);
       this.props.history.push("/");
-    } catch(error) {
+      alert("Sign Up Successful! ");
+    } catch (error) {
       console.log(error);
+      alert("We encountered some error please try again ");
     }
   };
   render() {
     return (
-      <div>
-        <form onSubmit={this.onSubmit}>
-        <label htmlFor="username">Username</label>
-          <input
-            id="username"
-            value={this.state.username}
-            onChange={(event) => this.onInputChange(event)}
-          ></input>
-          <label htmlFor="email">Email</label>
-          <input
-            id="email"
-            value={this.state.email}
-            onChange={(event) => this.onInputChange(event)}
-          ></input>
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            value={this.state.password}
-            onChange={(event) => this.onInputChange(event)}
-          ></input>
-          <label htmlFor="address">Address</label>
-          <input
-            id="address"
-            value={this.state.address}
-            onChange={(event) => this.onInputChange(event)}
-          ></input>
-          <label htmlFor="phonenumber">Phonenumber</label>
-          <input
-            id="phonenumber"
-            value={this.state.phonenumber}
-            onChange={(event) => this.onInputChange(event)}
-          ></input>
-          <label htmlFor="name">Name</label>
-          <input
-            id="name"
-            value={this.state.name}
-            onChange={(event) => this.onInputChange(event)}
-          ></input>
+      <section className="section auth">
+        <div className="container">
+          <form onSubmit={this.onSubmit}>
+            <h1>
+              <b>Sign Up</b>
+            </h1>
+            <p>Sign up to be one of Samurai Courier Service (SCS) driver!</p>
+            
+            <div className="field">
+              {/* <span><label className="signUp" htmlFor="username">Username:</label></span> */}
+              <p className="control has-icons-left">
+                <input
+                  id="username"
+                  className="input"
+                  value={this.state.username}
+                  placeholder="Username"
+                  onChange={(event) => this.onInputChange(event)}
+                ></input>
+                <span className="icon is-small is-left">
+                  <FontAwesomeIcon icon="user" />
+                </span>
+              </p>
+            </div>
+            <div className="field">
+              {/* <span ><label className="signUp" htmlFor="email">Email:</label></span> */}
+              <p className="control has-icons-left">
+                <input
+                  id="email"
+                  className="input"
+                  value={this.state.email}
+                  placeholder="Email"
+                  onChange={(event) => this.onInputChange(event)}
+                ></input>
+                <span className="icon is-small is-left">
+                  <FontAwesomeIcon icon= "envelope"/>
+                </span>
+              </p>
+            </div>
+            <div className="field">
+              {/* <span><label className="signUp" htmlFor="password">Password:</label></span> */}
+              <p className="control has-icons-left">
+                <input
+                  id="password"
+                  className="input"
+                  value={this.state.password}
+                  placeholder="Password"
+                  onChange={(event) => this.onInputChange(event)}
+                ></input>
+                  <span className="icon is-small is-left">
+                  <FontAwesomeIcon icon= "lock"/>
+                </span>
+              </p>
+            </div>
+            <div className="field">
+              {/* <span ><label className="signUp" htmlFor="address">Address:</label></span> */}
+              <p className="control has-icons-left">
+                <input
+                  id="address"
+                  className="input"
+                  value={this.state.address}
+                  placeholder="Address"
+                  onChange={(event) => this.onInputChange(event)}
+                ></input>
+                  <span className="icon is-small is-left">
+                  <FontAwesomeIcon icon= "address-book"/>
+                </span>
+              </p>
+            </div>
+            <div className="field">
+              {/* <span> <label className="signUp" htmlFor="phonenumber">Phonenumber:</label> </span> */}
+              <p className="control has-icons-left">
+                <input
+                  id="phonenumber"
+                  className="input"
+                  value={this.state.phonenumber}
+                  placeholder="Phone Number"
+                  onChange={(event) => this.onInputChange(event)}
+                ></input>
+                     <span className="icon is-small is-left">
+                  <FontAwesomeIcon icon= "mobile-alt"/>
+                </span>
+              </p>
+            </div>
+            <div className="field">
+              {/* <span ><label className="signUp" htmlFor="name">Name:</label></span> */}
+              <p className="control has-icons-left">
+                <input
+                  id="name"
+                  className="input"
+                  value={this.state.name}
+                  placeholder="Name"
+                  onChange={(event) => this.onInputChange(event)}
+                ></input>
+                       <span className="icon is-small is-left">
+                  <FontAwesomeIcon icon= "signature"/>
+                </span>
+              </p>
+            </div>
 
-          <button type="submit">Signup</button>
-        </form>
-      </div>
+            <button type="submit" className="button is-success">
+              Signup
+            </button>
+          </form>
+        </div>
+      </section>
     );
   }
-};
+}
 
 export default Signup;
