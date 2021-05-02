@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import Signup from "./Signup";
 import Login from "./login";
+import Admin from "./Admin";
 import Delivery from "./Delivery";
 import Tracking from "./Tracking";
 import Navbar from "./Narbar";
@@ -93,7 +94,7 @@ class App extends Component {
                 if (this.state.isDriver) {
                     return (<Redirect to="/Delivery" />);
                 } else if (this.state.isAdmin) {
-                    //return (<Admin {...props} />); //temporary componect, must change after
+                    return (<Admin {...props} />); 
                 }
             }
         } else {
@@ -132,7 +133,8 @@ class App extends Component {
                         <Route exact path="/Tracking" render={(props) => ( <Tracking {...props} />)} ></Route>
                         
                         {/* Temporary route create here for admin related componect
-                        Add/edit once created related component */}
+                        Add/edit once created related component */}\
+                        {/* <Route exact path="/Admin" render={(props) => ( <Admin {...props} />)} ></Route> */}
                         <Route exact path="/Admin" render={(props) => this.switchPageFromOther("Admin", props)} ></Route> 
 
                         {/* Route to 404 if invalid url detected */}

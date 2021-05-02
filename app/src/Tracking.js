@@ -24,7 +24,8 @@ class Tracking extends Component {
     classname3: "step0",
     classname4: "step0",
     classname5: "step0",
-    showTable: true,
+    showTable: false,
+    showNoDelivery:false,
   };
 
   handleChange(event) {
@@ -43,7 +44,6 @@ class Tracking extends Component {
       });
     }
 
-    this.setState({ showTable: false });
     this.setState({ value: "" });
     //alert("Tracking ID is submitted: " + this.state.value);
     //  console.log(this.state.value);
@@ -73,7 +73,7 @@ class Tracking extends Component {
         `${config.api.trackingIDURL}` + trackingid
       );
       //   console.log(`${config.api.trackingIDURL}` + trackingid);
-      //   console.log(response);
+      //console.log(response);
       const events = response.data;
       // console.log(events);
       if (events.length === 1) {
@@ -113,11 +113,25 @@ class Tracking extends Component {
       //       EventTimeStamp: "27/04/2021, 21:40:12",
       //     },
       //   ];
+      if (events.length === 0) {
+        this.setState({ showTable: false });
+        this.setState({ showNoDelivery: true });
+      } else {
+        this.setState({ showTable: true });
+        this.setState({ showNoDelivery: false });
+      }
 
       this.setState({ events: events });
+
     } catch (err) {
       console.log(`An error has occurred: ${err}`);
     }
+
+    window.scroll({
+      top: document.body.offsetHeight,
+      left: 0,
+      behavior: "smooth",
+    });
   };
 
   async componentDidMount() {
@@ -207,54 +221,15 @@ class Tracking extends Component {
               </label>
             </div>
           </form>
+          <div className="container px-1 px-md-4 py-5 mx-auto"
+          style={{ display: this.state.showNoDelivery ?  "block": "none"  }}><i class="fa fa-times" aria-hidden="true"></i> <span className="trackingError">Please check if your Tracking Number is correct.</span></div>
         </div>
 
-        <div
-          className="container border border-secondary rounded center"
-          style={{ display: this.state.showTable ? "none" : "block" }}
-        >
-          <div className="row">
-            <div className="col-12">
-              <h5>
-                ORDER{" "}
-                <span className="text-primary font-weight-bold">
-                  #{this.state.trackingid}
-                </span>
-              </h5>
-            </div>
-          </div>
-
-          <div>
-            <div className=".col-xs-12 center text-center ">
-              <Table dark responsive striped bordered hover>
-                <thead>
-                  <tr>
-                    <th>Tracking ID</th>
-                    <th>Delivery Status</th>
-                    {/* <th>Receiver Name</th>
-                                <th>Receiver Address</th>
-                                <th>Senders</th> */}
-                    <th colSpan="4">Time</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {this.state.events.length === 0 ? (
-                    <tr>
-                      <td colSpan="9">No pending deliveries.</td>
-                    </tr>
-                  ) : (
-                    events
-                  )}
-                </tbody>
-              </Table>
-            </div>
-          </div>
-        </div>
+        
 
         <div
           className="container px-1 px-md-4 py-5 mx-auto"
-          style={{ display: this.state.showTable ? "none" : "block" }}
+          style={{ display: this.state.showTable ? "block" : "none" }}
         >
           <div className="card">
             <div className="row d-flex justify-content-between px-3 top">
@@ -365,9 +340,49 @@ class Tracking extends Component {
                   </p>
                 </div>
               </div>
+
+            </div>
+            <div
+          className="container  border-secondary rounded center trackingTableContainer"
+          style={{ display: this.state.showTable ? "block" : "none" }}
+        >
+          <div className="row">
+            <div className="col-12">
+             
+            </div>
+          </div>
+
+          <div>
+            <div className=".col-xs-12 center text-center">
+              <Table dark responsive striped bordered hover>
+                <thead>
+                  <tr className="trackingTable">
+                    <th style={{color:"white"}}>Tracking ID</th>
+                    <th style={{color:"white"}}>Delivery Status</th>
+                    {/* <th>Receiver Name</th>
+                                <th>Receiver Address</th>
+                                <th>Senders</th> */}
+                    <th colSpan="4" style={{color:"white"}}>Time</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {this.state.events.length === 0 ? (
+                    <tr>
+                      <td colSpan="9">No pending deliveries.</td>
+                    </tr>
+                  ) : (
+                    events
+                  )}
+                </tbody>
+              </Table>
             </div>
           </div>
         </div>
+          </div>
+        </div>
+
+        
       </div>
     );
   }
