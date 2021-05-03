@@ -84,10 +84,11 @@ class Delivery extends Component {
 
      fetchProducts = async () => {
         try{
-            const region = this.state.value;
-            this.setState({ region: this.state.value });
+            //const region = this.state.value;
+            //this.setState({ region: this.state.value });
             // get 100 addresses in the region selected
-            const response = await axios.get(`${config.api.getDeliveryRegionAddressURL}` + 'West');
+            const region = 'West';
+            const response = await axios.get(`${config.api.getDeliveryRegionAddressURL}` + region);
             const Stops = [];
             var address = "";
             var name = "";
@@ -125,7 +126,7 @@ class Delivery extends Component {
                 }
               };
 
-            const res = await this.doPostRequest(data).then(result => {
+            await this.doPostRequest(data).then(result => {
               // do something with result
               console.log(result.data.stops);
             })
