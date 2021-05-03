@@ -30,7 +30,6 @@ class Login extends Component {
       // becuase of developer have discontinued developing this library amazon-cognito-identity-js, and bug found when doing token verification
       try {
         await Auth.signIn(this.state.email, this.state.password).then((user) => {
-          console.log(user)
           if (user.attributes['custom:role'] === 'Driver') {
             this.props.auth.setLoggedInState(true);
             this.props.auth.setUserDriver(true);
@@ -61,12 +60,11 @@ class Login extends Component {
     Validation(this.state)
       .then(error => {
         this.setState({ errorMsg: error });
-        if (error.length === 0) {
-          this.waitToLogin(true);
-        }
+        this.waitToLogin(error.length === 0);
       })
       .catch(() => this.setState({ errorMsg : ["Something went wrong, please refresh page and try again."] }))
   };
+  
   render() {
     return (
       <section className="section auth">

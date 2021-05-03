@@ -121,7 +121,7 @@ class App extends Component {
 
         return ( 
             !this.state.isAuthenticating &&
-            <div className="App">
+            <div>
                 <BrowserRouter>
                     <div>
                         <Navbar auth={authProps} />
