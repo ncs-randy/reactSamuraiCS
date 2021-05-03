@@ -222,7 +222,7 @@ class Tracking extends Component {
             </div>
           </form>
           <div className="container px-1 px-md-4 py-5 mx-auto"
-          style={{ display: this.state.showNoDelivery ?  "block": "none"  }}><i class="fa fa-times" aria-hidden="true"></i> <span className="trackingError">Please check if your Tracking Number is correct.</span></div>
+          style={{ display: this.state.showNoDelivery ?  "block": "none"  }}><i className="fa fa-times" aria-hidden="true"></i> <span className="trackingError">Please check if your Tracking Number is correct.</span></div>
         </div>
 
         
