@@ -4,11 +4,12 @@ import {faThumbsUp,faThumbsDown,faSearchLocation,faLocationArrow} from '@fortawe
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 const config = require('./config.json');
-
+const https = require('https');
 class Delivery extends Component {
     state = { 
         // isAuth: false,
-        deliveries:[]
+        deliveries:[],
+        region:"West"
         /* deliveries:[
             {
                 "orderID" : "100",
@@ -35,11 +36,102 @@ class Delivery extends Component {
             }
         ] */
      }
+
+     doPostRequest = (data) => {
+      return new Promise((resolve, reject) => {
+        // change [scs01] to unique pathid, to use DriverUsername
+        const options = {
+          host: 'app.elasticroute.com',
+          path: '/api/v1/plan/scs01?c=sync&w=false',
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer SwlZs30g99TY48UmgPeRNLQtf1OlD8q5rs9Z5ayHkYsPsxhptp8mL202zQ47'
+          }
+        };
+
+        //create the request object with the callback with the result
+        const req = https.request(options, (res) => {
+        res.setEncoding('utf8');
+        //resolve(JSON.stringify(res.statusCode));
+        var responsebody = [];
+        // on result recieving data push to array
+        res.on('data', (d) => {
+            responsebody.push(d);
+        });
+        // on result end concat response and return result
+        res.on('end', () => {
+          try {
+            responsebody = JSON.parse(responsebody.join(''));
+            //console.log(responsebody);
+          } catch(e) {
+            reject(e);
+          }
+            resolve(responsebody);
+          });
+        });
+        // handle the possible errors
+        req.on('error', (e) => {
+          reject(e.message);
+        });
+    
+        //do the request
+        req.write(JSON.stringify(data));
+        //finish the request
+        req.end();
+      });
+     }
+
      fetchProducts = async () => {
         try{
-            const response = await axios.get(`${config.api.invokeURL}/products`);
-            const deliveries = response.data;
-            this.setState({ deliveries: deliveries });
+            const region = this.state.value;
+            this.setState({ region: this.state.value });
+            // get 100 addresses in the region selected
+            const response = await axios.get(`${config.api.getDeliveryRegionAddressURL}` + 'West');
+            const Stops = [];
+            var address = "";
+            var name = "";
+            var stop;
+            for(var idx in response.data){
+                address = response.data[idx].StreetName + ' ' + response.data[idx].PostaCode;
+                name = response.data[idx].TrackingID;
+                stop = {
+                  "name": name,
+                  "address": address
+                };
+                Stops.push(stop);
+            }
+
+            var currentDate = new Date();
+            // get address and postal code and tracking id and process into request data
+            const data = {
+                "date": currentDate.toLocaleDateString('en-SG'),
+                "stops": Stops,
+                "depots": [
+                  {
+                    "name": "Main Warehouse",
+                    "postalcode": 569141
+                  }
+                ],
+                "vehicles": [
+                  {
+                    "name": "Van 1"
+                  }
+                ],
+                "rushHours": [],
+                "generalSettings": {
+                  "country": "SG",
+                  "timezone": "Asia/Singapore"
+                }
+              };
+
+            const res = await this.doPostRequest(data).then(result => {
+              // do something with result
+              console.log(result.data.stops);
+            })
+            .catch(err => console.error(`Error doing the request for the event: ${err}`));
+            //console.log(JSON.stringify(response.data));
+            //this.setState({ deliveries: deliveries });
         }catch(err){
             console.log(`An error has occurred: ${err}`);
         }
@@ -66,9 +158,9 @@ class Delivery extends Component {
         
         let deliveries = allDevliveries.map(
             delivery =>
-            <tr key={delivery.id}>
-                <td>{delivery.id}</td>
-                <td>{delivery.productname}</td>
+            <tr key={delivery.TrackingID}>
+                <td>{delivery.TrackingID}</td>
+                <td>{delivery.StreetName}</td>
                 {/* <td>{delivery.deliveryID}</td>
                 <td>{delivery.Addressee}</td>
                 <td>{delivery.Address}</td>
@@ -93,8 +185,8 @@ class Delivery extends Component {
                         <Table dark responsive striped bordered hover>
                             <thead>
                                 <tr>
-                                <th>Order #</th>
-                                <th>Delivery #</th>
+                                <th>Tracking ID</th>
+                                <th>Address</th>
                                 {/* <th>Receiver Name</th>
                                 <th>Receiver Address</th>
                                 <th>Senders</th> */}
