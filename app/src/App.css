@@ -206,6 +206,14 @@ body {
   outline: none;
 }
 
+.trackingTable{
+  color:white;
+}
+
+.trackingTableContainer{
+border:none;
+}
+
 @import url("https://fonts.googleapis.com/css?family=Montserrat");
 
 div {
@@ -249,3 +257,15 @@ div {
 .error-template {padding: 40px 15px;text-align: center;}
 .error-actions {margin-top:15px;margin-bottom:15px;}
 .error-actions .btn { margin-right:10px; }
+
+.scsgraph{
+
+  margin-left: 10vw;
+  margin-right: 10vw;
+}
+
+.fa-times ,.trackingError{
+
+  color: red;
+}
+
