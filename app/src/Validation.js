@@ -42,21 +42,27 @@ function validate(input) {
                 document.getElementById("password").classList.add("is-danger");
                 msgArr.push("Password cannot be empty.");
             } else {
-                if (input.password.length < 8) {
-                    document.getElementById("password").classList.add("is-danger");
-                    msgArr.push("Password must be at least 8 characters long.");
-                } else if(!/[a-z]/.test(input.password)) {
-                    document.getElementById("password").classList.add("is-danger");
-                    msgArr.push("Password must have lowercase characters.");
-                } else if(!/[A-Z]/.test(input.password)) {
-                    document.getElementById("password").classList.add("is-danger");
-                    msgArr.push("Password must have uppercase characters.");
-                } else if(!/\d/.test(input.password)) {
-                    document.getElementById("password").classList.add("is-danger");
-                    msgArr.push("Password must have numeric characters.");
-                } else if(!/[=+\-^$*.[\]{}()?"!@#%&/\\,><':;|_~`]/.test(input.password)) {
-                    document.getElementById("password").classList.add("is-danger");
-                    msgArr.push("Password must have at least one of following symbol characters. (= + - ^ $ * . [ ] { } ( ) ? \" ! @ # % & / \\ , > < ' : ; | _ ~ `)");
+                if (window.location.pathname !== "/Login") {
+                    if (input.password.length < 8) {
+                        document.getElementById("password").classList.add("is-danger");
+                        msgArr.push("Password must be at least 8 characters long.");
+                    }
+                    if(!/[a-z]/.test(input.password)) {
+                        document.getElementById("password").classList.add("is-danger");
+                        msgArr.push("Password must have lowercase characters.");
+                    }
+                    if(!/[A-Z]/.test(input.password)) {
+                        document.getElementById("password").classList.add("is-danger");
+                        msgArr.push("Password must have uppercase characters.");
+                    }
+                    if(!/\d/.test(input.password)) {
+                        document.getElementById("password").classList.add("is-danger");
+                        msgArr.push("Password must have numeric characters.");
+                    }
+                    if(!/[=+\-^$*.[\]{}()?"!@#%&/\\,><':;|_~`]/.test(input.password)) {
+                        document.getElementById("password").classList.add("is-danger");
+                        msgArr.push("Password must have at least one of following symbol characters. (= + - ^ $ * . [ ] { } ( ) ? \" ! @ # % & / \\ , > < ' : ; | _ ~ `)");
+                    }
                 }
             }
         }
