@@ -76,7 +76,7 @@ class App extends Component {
             if (page === "Login")
                 return (<Login {...props} auth={authProps} />);
             else if (page === "SignUp")
-                return (<Signup {...props} />);
+                return (<Signup />);
         }
         return (<Redirect to="/" />);
     }

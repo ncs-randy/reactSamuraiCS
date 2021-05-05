@@ -13,7 +13,8 @@ class Signup extends Component {
     phonenumber: "",
     password: "",
     confirmpassword: "",
-    errorMsg: []
+    errorMsg: [],
+    succeed: false
   }
 
   clearErrorState = () => {
@@ -49,10 +50,11 @@ class Signup extends Component {
           },
         })
         .then(() => {
-          this.props.history.push("/");
+          //this.props.history.push("/");
+          this.setState({ succeed: true });
         })
       } catch (error) {
-        this.setState({ errorMsg : [error.message] });
+        this.setState({ errorMsg: [error.message] });
       }
     }
   }
@@ -60,141 +62,163 @@ class Signup extends Component {
   onSubmit = async (event) => {
     event.preventDefault();
     this.clearErrorState();
-    
+
     Validation(this.state)
       .then(error => {
         this.setState({ errorMsg: error });
         this.waitToSignUp(error.length === 0);
       })
-      .catch(() => this.setState({ errorMsg : ["Something went wrong, please refresh page and try again."] }))
+      .catch(() => this.setState({ errorMsg: ["Something went wrong, please refresh page and try again."] }))
   };
   render() {
-    return (
-      <section className="section auth">
-        <div className="container">
-          <h1>Sign Up</h1>
-          <p>Sign up to be one of Samurai Courier Service (SCS) driver!</p>
-          <FormErrors formerrors={this.state.errorMsg} />
+    if (!this.state.succeed) {
+      return (
+        <section className="section auth">
+          <div className="container">
+            <h1>Sign Up</h1>
+            <p>Sign up to be one of Samurai Courier Service (SCS) driver!</p>
+            <FormErrors formerrors={this.state.errorMsg} />
 
-          <form onSubmit={this.onSubmit}>
-          <div className="field">
-              <p className="control has-icons-left">
-                <input 
-                  className="input" 
-                  type="text"
-                  id="name"
-                  placeholder="Full Name"
-                  value={this.state.name}
-                  onChange={(event) => this.onInputChange(event)}
-                />
-                <span className="icon is-small is-left">
-                  <FontAwesomeIcon icon= "signature"/>
-                </span>
-              </p>
+            <form onSubmit={this.onSubmit}>
+              <div className="field">
+                <p className="control has-icons-left">
+                  <input
+                    className="input"
+                    type="text"
+                    id="name"
+                    placeholder="Full Name"
+                    value={this.state.name}
+                    onChange={(event) => this.onInputChange(event)}
+                  />
+                  <span className="icon is-small is-left">
+                    <FontAwesomeIcon icon="signature" />
+                  </span>
+                </p>
+              </div>
+              <div className="field">
+                <p className="control has-icons-left">
+                  <input
+                    className="input"
+                    type="text"
+                    id="username"
+                    aria-describedby="userNameHelp"
+                    placeholder="Username"
+                    value={this.state.username}
+                    onChange={(event) => this.onInputChange(event)}
+                  />
+                  <span className="icon is-small is-left">
+                    <FontAwesomeIcon icon="user" />
+                  </span>
+                </p>
+              </div>
+              <div className="field">
+                <p className="control has-icons-left has-icons-right">
+                  <input
+                    className="input"
+                    type="text"
+                    id="email"
+                    aria-describedby="emailHelp"
+                    placeholder="Email"
+                    value={this.state.email}
+                    onChange={(event) => this.onInputChange(event)}
+                  />
+                  <span className="icon is-small is-left">
+                    <FontAwesomeIcon icon="envelope" />
+                  </span>
+                </p>
+              </div>
+              <div className="field">
+                <p className="control has-icons-left">
+                  <input
+                    className="input"
+                    type="password"
+                    id="password"
+                    placeholder="Password"
+                    value={this.state.password}
+                    onChange={(event) => this.onInputChange(event)}
+                  />
+                  <span className="icon is-small is-left">
+                    <FontAwesomeIcon icon="lock" />
+                  </span>
+                </p>
+              </div>
+              <div className="field">
+                <p className="control has-icons-left">
+                  <input
+                    className="input"
+                    type="password"
+                    id="confirmpassword"
+                    placeholder="Confirm password"
+                    value={this.state.confirmpassword}
+                    onChange={(event) => this.onInputChange(event)}
+                  />
+                  <span className="icon is-small is-left">
+                    <FontAwesomeIcon icon="unlock" />
+                  </span>
+                </p>
+              </div>
+              <div className="field">
+                <p className="control has-icons-left">
+                  <input
+                    className="input"
+                    type="text"
+                    id="address"
+                    placeholder="Address"
+                    value={this.state.address}
+                    onChange={(event) => this.onInputChange(event)}
+                  />
+                  <span className="icon is-small is-left">
+                    <FontAwesomeIcon icon="globe" />
+                  </span>
+                </p>
+              </div>
+              <div className="field">
+                <p className="control has-icons-left">
+                  <input
+                    className="input"
+                    type="tel"
+                    id="phonenumber"
+                    placeholder="Phone Number e.g +6587654321"
+                    value={this.state.phonenumber}
+                    onChange={(event) => this.onInputChange(event)}
+                  />
+                  <span className="icon is-small is-left">
+                    <FontAwesomeIcon icon="mobile-alt" />
+                  </span>
+                </p>
+              </div>
+              <div className="field">
+                <p className="control">
+                  <button className="button is-success">
+                    Sign Up
+                  </button>
+                </p>
+              </div>
+            </form>
+          </div>
+        </section>
+      );
+    } else {
+      return (
+        <section className="section is-medium">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="error-template">
+                  <h1>Successfully Sign Up</h1>
+                  <div class="error-details">
+                    Your driver account has been created. A confirmation email has been sent to your email, please check your inbox and click on the link in that email to activate you account.</div>
+                  <div class="error-actions">
+                    <a href="/Login" class="button is-primary">
+                      Login </a>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="field">
-              <p className="control has-icons-left">
-                <input 
-                  className="input" 
-                  type="text"
-                  id="username"
-                  aria-describedby="userNameHelp"
-                  placeholder="Username"
-                  value={this.state.username}
-                  onChange={(event) => this.onInputChange(event)}
-                />
-                <span className="icon is-small is-left">
-                  <FontAwesomeIcon icon="user" />
-                </span>
-              </p>
-            </div>
-            <div className="field">
-              <p className="control has-icons-left has-icons-right">
-                <input 
-                  className="input" 
-                  type="text"
-                  id="email"
-                  aria-describedby="emailHelp"
-                  placeholder="Email"
-                  value={this.state.email}
-                  onChange={(event) => this.onInputChange(event)}
-                />
-                <span className="icon is-small is-left">
-                  <FontAwesomeIcon icon="envelope" />
-                </span>
-              </p>
-            </div>
-            <div className="field">
-              <p className="control has-icons-left">
-                <input 
-                  className="input" 
-                  type="password"
-                  id="password"
-                  placeholder="Password"
-                  value={this.state.password}
-                  onChange={(event) => this.onInputChange(event)}
-                />
-                <span className="icon is-small is-left">
-                  <FontAwesomeIcon icon="lock" />
-                </span>
-              </p>
-            </div>
-            <div className="field">
-              <p className="control has-icons-left">
-                <input 
-                  className="input" 
-                  type="password"
-                  id="confirmpassword"
-                  placeholder="Confirm password"
-                  value={this.state.confirmpassword}
-                  onChange={(event) => this.onInputChange(event)}
-                />
-                <span className="icon is-small is-left">
-                  <FontAwesomeIcon icon="unlock" />
-                </span>
-              </p>
-            </div>
-            <div className="field">
-              <p className="control has-icons-left">
-                <input 
-                  className="input" 
-                  type="text"
-                  id="address"
-                  placeholder="Address"
-                  value={this.state.address}
-                  onChange={(event) => this.onInputChange(event)}
-                />
-                <span className="icon is-small is-left">
-                  <FontAwesomeIcon icon="globe" />
-                </span>
-              </p>
-            </div>
-            <div className="field">
-              <p className="control has-icons-left">
-                <input 
-                  className="input" 
-                  type="tel"
-                  id="phonenumber"
-                  placeholder="Phone Number e.g +6587654321"
-                  value={this.state.phonenumber}
-                  onChange={(event) => this.onInputChange(event)}
-                />
-                <span className="icon is-small is-left">
-                  <FontAwesomeIcon icon= "mobile-alt"/>
-                </span>
-              </p>
-            </div>
-            <div className="field">
-              <p className="control">
-                <button className="button is-success">
-                  Sign Up
-                </button>
-              </p>
-            </div>
-          </form>
-        </div>
-      </section>
-    );
+          </div>
+        </section>
+      );
+    }
   }
 }
 
