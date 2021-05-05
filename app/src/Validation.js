@@ -8,19 +8,57 @@ function validate(input) {
                 error_tags[x].classList.remove("is-danger");
             }
         }
+
+        if (input.hasOwnProperty("name") && input.name === "") {
+            document.getElementById("name").classList.add("is-danger");
+            msgArr.push("Name cannot be empty.");
+        }
+
+        if (input.hasOwnProperty("username") && input.username === "") {
+            document.getElementById("username").classList.add("is-danger");
+            msgArr.push("Username cannot be empty.");
+        }
     
-        if (input.hasOwnProperty("email") && input.email === "") {
-            document.getElementById("email").classList.add("is-danger");
-            if (window.location.pathname === "/Login") {
-                msgArr.push("Email/Username cannot be empty.");
+        if (input.hasOwnProperty("email")) {
+            if (input.email === "") {
+                document.getElementById("email").classList.add("is-danger");
+                if (window.location.pathname === "/Login") {
+                    msgArr.push("Email/Username cannot be empty.");
+                } else {
+                    msgArr.push("Email cannot be empty.");
+                }
             } else {
-                msgArr.push("Email cannot be empty.");
+                if (window.location.pathname !== "/Login") {
+                    const emeilRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
+                    if (!emeilRegex.test(input.email)) {
+                        msgArr.push("Invalid email format.");
+                    }
+                }
             }
         }
     
-        if (input.hasOwnProperty("password") && input.password === "") {
-            document.getElementById("password").classList.add("is-danger");
-            msgArr.push("Password cannot be empty.");
+        if (input.hasOwnProperty("password")) {
+            if (input.password === "") {
+                document.getElementById("password").classList.add("is-danger");
+                msgArr.push("Password cannot be empty.");
+            } else {
+                if (input.password.length < 8) {
+                    document.getElementById("password").classList.add("is-danger");
+                    msgArr.push("Password must be at least 8 characters long.");
+                } else if(!/[a-z]/.test(input.password)) {
+                    document.getElementById("password").classList.add("is-danger");
+                    msgArr.push("Password must have lowercase characters.");
+                } else if(!/[A-Z]/.test(input.password)) {
+                    document.getElementById("password").classList.add("is-danger");
+                    msgArr.push("Password must have uppercase characters.");
+                } else if(!/\d/.test(input.password)) {
+                    document.getElementById("password").classList.add("is-danger");
+                    msgArr.push("Password must have numeric characters.");
+                } else if(!/[=+\-^$*.[\]{}()?"!@#%&/\\,><':;|_~`]/.test(input.password)) {
+                    document.getElementById("password").classList.add("is-danger");
+                    msgArr.push("Password must have at least one of following symbol characters. (= + - ^ $ * . [ ] { } ( ) ? \" ! @ # % & / \\ , > < ' : ; | _ ~ `)");
+                }
+            }
         }
 
         if (input.hasOwnProperty("confirmpassword")) {
@@ -32,16 +70,6 @@ function validate(input) {
                 document.getElementById("confirmpassword").classList.add("is-danger");
                 msgArr.push("Passwords didn’t match.");
             }
-        }
-
-        if (input.hasOwnProperty("name") && input.name === "") {
-            document.getElementById("name").classList.add("is-danger");
-            msgArr.push("Name cannot be empty.");
-        }
-
-        if (input.hasOwnProperty("username") && input.username === "") {
-            document.getElementById("username").classList.add("is-danger");
-            msgArr.push("Username cannot be empty.");
         }
 
         if (input.hasOwnProperty("address") && input.address === "") {
