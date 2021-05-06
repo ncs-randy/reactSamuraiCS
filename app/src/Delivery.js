@@ -83,7 +83,7 @@ class Delivery extends Component {
       });
      }
 
-     fetchProducts = async () => {
+     fetchProducts = async (regionname) => {
         try{
             //const region = this.state.value;
             //this.setState({ region: this.state.value });
@@ -100,6 +100,7 @@ class Delivery extends Component {
             var trackingids = [];
             var orderids = [];
             var emails = [];
+            console.log(response);
             for(var idx in response.data){
                 address = response.data[idx].StreetName + ' ' + response.data[idx].PostaCode;
                 name = response.data[idx].TrackingID;
@@ -145,7 +146,7 @@ class Delivery extends Component {
             await axios.post(`${config.api.deliveryRoutingURL}`, data).then((res)=>{
               // process data to show on table
               //let deliverylist = [];
-              console.log(res.data);
+              console.log(res);
               let data = res.data.body.RequestItems.DeliveryRoute;
               console.log(data);
               let route = [];
@@ -195,7 +196,7 @@ class Delivery extends Component {
      }
 
     remove(id){
-        let updated = [...this.state.deliveries].filter(i => i.orderID !== id)
+        let updated = [...this.state.deliveries].filter(i => i.TrackingID !== id)
         this.setState( {deliveries:updated });
     }
 
@@ -219,7 +220,7 @@ class Delivery extends Component {
                 <td>{delivery.Addressee}</td>
                 <td>{delivery.Address}</td>
                 <td>{delivery.Sender}</td> */}
-                <td><Button className="btn btn-lg btn-success" onClick={() => this.remove(delivery.orderID)}><FontAwesomeIcon icon={faThumbsUp}></FontAwesomeIcon> Delivered</Button></td>
+                <td><Button className="btn btn-lg btn-success" onClick={() => this.remove(delivery.TrackingID)}><FontAwesomeIcon icon={faThumbsUp}></FontAwesomeIcon> Delivered</Button></td>
                 <td><Button className="btn btn-lg btn-danger" onClick={() => this.doNothing()}><FontAwesomeIcon icon={faThumbsDown}></FontAwesomeIcon> Undelivered</Button></td>
                 <td><Button className="btn btn-lg btn-info" onClick={() => this.doNothing()}><FontAwesomeIcon icon={faSearchLocation}></FontAwesomeIcon> Search</Button></td>
                 <td><Button className="btn btn-lg btn-warning" onClick={this.doNothing()}><FontAwesomeIcon icon={faLocationArrow}></FontAwesomeIcon> Direction</Button></td>
