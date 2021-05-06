@@ -200,6 +200,19 @@ class Delivery extends Component {
         this.setState( {deliveries:updated });
     }
 
+    locateRecipient(address){
+      // address: Tuas Ave 12 680253
+      var postal = address.substring(address.length-6);
+      window.open("https://www.google.com.sg/maps/place/Singapore+" + postal, "_blank");
+    }
+
+    getDirections(address){
+      var postal = address.substring(address.length-6);
+      // somehow try to get current position
+      var currentAddressPostal="";
+      window.open("https://www.google.com.sg/maps/dir/Singapore+" + postal, "_blank");
+    }
+
     doNothing(){
 
     }
@@ -222,7 +235,7 @@ class Delivery extends Component {
                 <td>{delivery.Sender}</td> */}
                 <td><Button className="btn btn-lg btn-success" onClick={() => this.remove(delivery.TrackingID)}><FontAwesomeIcon icon={faThumbsUp}></FontAwesomeIcon> Delivered</Button></td>
                 <td><Button className="btn btn-lg btn-danger" onClick={() => this.doNothing()}><FontAwesomeIcon icon={faThumbsDown}></FontAwesomeIcon> Undelivered</Button></td>
-                <td><Button className="btn btn-lg btn-info" onClick={() => this.doNothing()}><FontAwesomeIcon icon={faSearchLocation}></FontAwesomeIcon> Search</Button></td>
+                <td><Button className="btn btn-lg btn-info" onClick={() => this.locateRecipient(delivery.Address)}><FontAwesomeIcon icon={faSearchLocation}></FontAwesomeIcon> Search</Button></td>
                 <td><Button className="btn btn-lg btn-warning" onClick={this.doNothing()}><FontAwesomeIcon icon={faLocationArrow}></FontAwesomeIcon> Direction</Button></td>
             </tr>
         )
