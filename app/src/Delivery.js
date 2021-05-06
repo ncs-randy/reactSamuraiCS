@@ -209,7 +209,7 @@ class Delivery extends Component {
     getDirections(address){
       var postal = address.substring(address.length-6);
       // somehow try to get current position
-      var currentAddressPostal="";
+      //var currentAddressPostal="";
       window.open("https://www.google.com.sg/maps/dir/Singapore+" + postal, "_blank");
     }
 
