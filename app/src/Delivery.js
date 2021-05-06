@@ -205,6 +205,9 @@ class Delivery extends Component {
 
     render() { 
         const allDevliveries = this.state.deliveries;
+
+        // use this for current auth user info
+        //console.log(this.props.auth);
         
         let deliveries = allDevliveries.map(
             delivery =>

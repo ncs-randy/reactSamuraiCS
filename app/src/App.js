@@ -76,17 +76,17 @@ class App extends Component {
             if (page === "Login")
                 return (<Login {...props} auth={authProps} />);
             else if (page === "SignUp")
-                return (<Signup {...props} />);
+                return (<Signup />);
         }
         return (<Redirect to="/" />);
     }
 
     // use only for other routes @params page, hardcode into this when created new component
-    switchPageFromOther(page, props) {
+    switchPageFromOther(page, props, authProps) {
         if (this.state.loggedInState) { 
             if (page === "Delivery") {
                 if (this.state.isDriver) {
-                    return (<Delivery {...props} />);
+                    return (<Delivery {...props} auth={authProps} />);
                 } else if (this.state.isAdmin) {
                     return (<Redirect to="/Admin" />); //temporary componect
                 }
@@ -121,7 +121,7 @@ class App extends Component {
 
         return ( 
             !this.state.isAuthenticating &&
-            <div className="App">
+            <div>
                 <BrowserRouter>
                     <div>
                         <Navbar auth={authProps} />
@@ -129,7 +129,7 @@ class App extends Component {
                         <Route exact path="/" render={(props) => <Tracking {...props} /> } ></Route>
                         <Route path="/Login" render={(props) => this.switchPageFromLoginSignup("Login", props, authProps)} ></Route>
                         <Route path="/SignUp" render={(props) => this.switchPageFromLoginSignup("SignUp", props, authProps)} ></Route>
-                        <Route path="/Delivery" render={(props) => this.switchPageFromOther("Delivery", props)} ></Route>
+                        <Route path="/Delivery" render={(props) => this.switchPageFromOther("Delivery", props, authProps)} ></Route>
                         <Route exact path="/Tracking" render={(props) => ( <Tracking {...props} />)} ></Route>
                         
                         {/* Temporary route create here for admin related componect
