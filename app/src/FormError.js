@@ -1,7 +1,6 @@
 import React from "react";
 
 function FormErrors(props) {
-    console.log(props);
     let keycnt = 0;
     if (props.formerrors !== null && props.formerrors.length > 0) {
         return (

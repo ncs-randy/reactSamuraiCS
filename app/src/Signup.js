@@ -54,7 +54,15 @@ class Signup extends Component {
           this.setState({ succeed: true });
         })
       } catch (error) {
-        this.setState({ errorMsg: [error.message] });
+        if (error.code === "UsernameExistsException") {
+          document.getElementById("username").classList.add("is-danger");
+          this.setState({ errorMsg: ["Username already exists."] });
+        } else if (error.code === "UserLambdaValidationException") {
+          document.getElementById("email").classList.add("is-danger");
+          this.setState({ errorMsg: ["Email already exists."] });
+        } else {
+          this.setState({ errorMsg: [error.message] });
+        }
       }
     }
   }

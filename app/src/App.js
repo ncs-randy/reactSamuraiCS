@@ -52,7 +52,6 @@ class App extends Component {
                     this.setUserAdmin(true);
                 }
             }
-            console.log(this.state.user);
         } catch(error) {
             //console.error(error);
             Auth.signOut();
