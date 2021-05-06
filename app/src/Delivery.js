@@ -46,7 +46,8 @@ class Delivery extends Component {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer SwlZs30g99TY48UmgPeRNLQtf1OlD8q5rs9Z5ayHkYsPsxhptp8mL202zQ47'
+            'Authorization': 'Bearer SwlZs30g99TY48UmgPeRNLQtf1OlD8q5rs9Z5ayHkYsPsxhptp8mL202zQ47',
+            "access-control-allow-origin": "*"
           }
         };
 
@@ -93,6 +94,12 @@ class Delivery extends Component {
             var address = "";
             var name = "";
             var stop;
+            var unitnos = new Map();
+            var tidtooid = new Map();
+            var tidtoemail = new Map();
+            var trackingids = [];
+            var orderids = [];
+            var emails = [];
             for(var idx in response.data){
                 address = response.data[idx].StreetName + ' ' + response.data[idx].PostaCode;
                 name = response.data[idx].TrackingID;
@@ -100,18 +107,28 @@ class Delivery extends Component {
                   "name": name,
                   "address": address
                 };
+                unitnos.set(name, response.data[idx].UnitNo);
+                tidtooid.set(name, response.data[idx].orderID);
+                tidtoemail.set(name, response.data[idx].EmailAddress);
                 Stops.push(stop);
             }
-
             var currentDate = new Date();
+            // convert '03/05/2021' -> '2021-05-03'
+            var currDate = currentDate.toLocaleDateString('en-SG');
+            var splitdate = currDate.split('/');
+            const tmp = splitdate[2];
+            splitdate[2] = splitdate[0];
+            splitdate[0] = tmp;
+            currDate = splitdate.join('-');
             // get address and postal code and tracking id and process into request data
             const data = {
-                "date": currentDate.toLocaleDateString('en-SG'),
+                "date": currDate,
                 "stops": Stops,
                 "depots": [
                   {
                     "name": "Main Warehouse",
-                    "postalcode": 569141
+                    "address": "Ncs Hub, Ang Mo Kio Street 62, 5",
+                    "postal_code": 569141
                   }
                 ],
                 "vehicles": [
@@ -125,12 +142,43 @@ class Delivery extends Component {
                   "timezone": "Asia/Singapore"
                 }
               };
+            await axios.post(`${config.api.deliveryRoutingURL}`, data).then((res)=>{
+              // process data to show on table
+              //let deliverylist = [];
+              console.log(res.data);
+              let data = res.data.body.RequestItems.DeliveryRoute;
+              console.log(data);
+              let route = [];
+              
+              var tid;
+              for(idx in data){
+                tid = data[idx].PutRequest.Item.TrackingID;
+                let stop = {
+                  "TrackingID" : tid,
+                  "Address" : data[idx].PutRequest.Item.address,
+                  "UnitNo" : unitnos.get(data[idx].PutRequest.Item.TrackingID)
+                }
+                trackingids.push(tid);
+                orderids.push(tidtooid.get(tid));
+                emails.push(tidtoemail.get(tid));
+                route.push(stop);
+              }
+              //console.log(unitnos.get(tid));
+              this.setState({deliveries:route})
+            }).catch((err)=>{
+              console.log(err);
+            });
 
-            await this.doPostRequest(data).then(result => {
-              // do something with result
-              console.log(result.data.stops);
-            })
-            .catch(err => console.error(`Error doing the request for the event: ${err}`));
+            //send email notification
+            //{trackingids:[],orderids:[],emails:[]}
+            //console.log(emails);
+            let data2 = {
+              "trackingids": trackingids,
+              "orderids": orderids,
+              "emails": emails
+              }
+              console.log(data2);
+            await axios.post(`${config.api.batchemailnotificationURL}`, data2);
             //console.log(JSON.stringify(response.data));
             //this.setState({ deliveries: deliveries });
         }catch(err){
@@ -142,6 +190,7 @@ class Delivery extends Component {
          //const response = await fetch("https://wvhviz13k5.execute-api.ap-southeast-1.amazonaws.com/prod/products");
          //const body = await response.json();
          //this.setState({deliveries:body, isLoading:false});
+         // get delivery addresses -> plan route -> send notification email
          this.fetchProducts();
      }
 
@@ -161,7 +210,8 @@ class Delivery extends Component {
             delivery =>
             <tr key={delivery.TrackingID}>
                 <td>{delivery.TrackingID}</td>
-                <td>{delivery.StreetName}</td>
+                <td>{delivery.Address}</td>
+                <td>{delivery.UnitNo}</td>
                 {/* <td>{delivery.deliveryID}</td>
                 <td>{delivery.Addressee}</td>
                 <td>{delivery.Address}</td>
@@ -183,11 +233,12 @@ class Delivery extends Component {
 
                 <div className="row">
                     <div className=".col-xs-12 center text-center ">
-                        <Table dark responsive striped bordered hover>
+                        <Table responsive striped bordered hover>
                             <thead>
                                 <tr>
                                 <th>Tracking ID</th>
                                 <th>Address</th>
+                                <th>Unit Number</th>
                                 {/* <th>Receiver Name</th>
                                 <th>Receiver Address</th>
                                 <th>Senders</th> */}

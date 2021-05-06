@@ -3,7 +3,9 @@
         "invokeURL": "https://wvhviz13k5.execute-api.ap-southeast-1.amazonaws.com/prod",
         "trackingIDURL":"https://4gkag3pogh.execute-api.ap-southeast-1.amazonaws.com/Production/trackingid?tracking=",
         "getDeliveryRegionAddressURL":"https://4gkag3pogh.execute-api.ap-southeast-1.amazonaws.com/Production/regionaddress?region=",
-        "graphURL":"https://4gkag3pogh.execute-api.ap-southeast-1.amazonaws.com/Production/graph"
+        "graphURL":"https://4gkag3pogh.execute-api.ap-southeast-1.amazonaws.com/Production/graph",
+        "deliveryRoutingURL" : "https://4gkag3pogh.execute-api.ap-southeast-1.amazonaws.com/Production/deliveryroute",
+        "batchemailnotificationURL": "https://ey4ifah0fk.execute-api.ap-southeast-1.amazonaws.com/prod/batchnotify"
     },
     "cognito": {
         "REGION": "ap-southeast-1",
