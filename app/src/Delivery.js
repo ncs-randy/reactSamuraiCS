@@ -183,7 +183,8 @@ class Delivery extends Component {
                 let stop = {
                   "TrackingID" : tid,
                   "Address" : data[idx].PutRequest.Item.address,
-                  "UnitNo" : unitnos.get(data[idx].PutRequest.Item.TrackingID)
+                  "UnitNo" : unitnos.get(data[idx].PutRequest.Item.TrackingID),
+                  "PlanName" : "scs02"
                 }
                 trackingids.push(tid);
                 orderids.push(tidtooid.get(tid));
@@ -221,8 +222,10 @@ class Delivery extends Component {
          //this.fetchProducts();
      }
 
-    remove(id){
+    confirm = async(id) => {
         let updated = [...this.state.deliveries].filter(i => i.TrackingID !== id)
+        const data = {"TrackingID" : id, "PlanName" : "scs02", "Parameter" : "Y"}
+        await axios.post(`${config.api.deliveryconfirmation}`, data)
         this.setState( {deliveries:updated });
     }
 
@@ -243,6 +246,13 @@ class Delivery extends Component {
 
     }
 
+    fail = async (id) => {
+      let updated = [...this.state.deliveries].filter(i => i.TrackingID !== id)
+        const data = {"TrackingID" : id, "PlanName" : "scs02", "Parameter" : "N"}
+        await axios.post(`${config.api.deliveryconfirmation}`, data)
+        this.setState( {deliveries:updated });
+    }
+
     render() { 
         
         if (this.state.isSubmit) {
@@ -261,10 +271,10 @@ class Delivery extends Component {
                   <td>{delivery.Addressee}</td>
                   <td>{delivery.Address}</td>
                   <td>{delivery.Sender}</td> */}
-                  <td><Button className="btn btn-lg btn-success" onClick={() => this.remove(delivery.TrackingID)}><FontAwesomeIcon icon={faThumbsUp}></FontAwesomeIcon> Delivered</Button></td>
-                  <td><Button className="btn btn-lg btn-danger" onClick={() => this.doNothing()}><FontAwesomeIcon icon={faThumbsDown}></FontAwesomeIcon> Undelivered</Button></td>
+                  <td><Button className="btn btn-lg btn-success" onClick={() => this.confirm(delivery.TrackingID)}><FontAwesomeIcon icon={faThumbsUp}></FontAwesomeIcon> Delivered</Button></td>
+                  <td><Button className="btn btn-lg btn-danger" onClick={() => this.fail(delivery.TrackingID)}><FontAwesomeIcon icon={faThumbsDown}></FontAwesomeIcon> Undelivered</Button></td>
                   <td><Button className="btn btn-lg btn-info" onClick={() => this.locateRecipient(delivery.Address)}><FontAwesomeIcon icon={faSearchLocation}></FontAwesomeIcon> Search</Button></td>
-                  <td><Button className="btn btn-lg btn-warning" onClick={this.getDirections()}><FontAwesomeIcon icon={faLocationArrow}></FontAwesomeIcon> Direction</Button></td>
+                  <td><Button className="btn btn-lg btn-warning" onClick={() => this.getDirections(delivery.Address)}><FontAwesomeIcon icon={faLocationArrow}></FontAwesomeIcon> Direction</Button></td>
               </tr>
           )
           return ( 
