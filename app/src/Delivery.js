@@ -9,7 +9,9 @@ class Delivery extends Component {
     state = { 
         // isAuth: false,
         deliveries:[],
-        region:"West"
+        region:"",
+        inputDisable: true,
+        isSubmit: false
         /* deliveries:[
             {
                 "orderID" : "100",
@@ -83,12 +85,36 @@ class Delivery extends Component {
       });
      }
 
+     onInputChange = () => {
+       const inputRegion = document.getElementById('region').value;
+      this.setState({
+        region: inputRegion
+      });
+      if (inputRegion.length > 0) {
+        this.setState({ inputDisable: false });
+      }
+    };
+
+    submitRetrieve = async (event) => {
+      event.preventDefault();
+      this.setState({ inputDisable: true });
+      if (this.state.region.length > 0 && !this.state.isSubmit) {
+        await this.fetchProducts(this.state.region)
+        .then(() =>{
+          this.setState({ isSubmit: true });
+        })
+        .catch(() => {
+          this.setState({ isSubmit: false , inputDisable: false });
+        })
+      }
+    }
+
      fetchProducts = async (regionname) => {
         try{
             //const region = this.state.value;
             //this.setState({ region: this.state.value });
             // get 100 addresses in the region selected
-            const region = 'West';
+            const region = regionname;
             const response = await axios.get(`${config.api.getDeliveryRegionAddressURL}` + region);
             const Stops = [];
             var address = "";
@@ -192,7 +218,7 @@ class Delivery extends Component {
          //const body = await response.json();
          //this.setState({deliveries:body, isLoading:false});
          // get delivery addresses -> plan route -> send notification email
-         this.fetchProducts();
+         //this.fetchProducts();
      }
 
     remove(id){
@@ -218,29 +244,30 @@ class Delivery extends Component {
     }
 
     render() { 
-        const allDevliveries = this.state.deliveries;
-
-        // use this for current auth user info
-        //console.log(this.props.auth);
         
-        let deliveries = allDevliveries.map(
-            delivery =>
-            <tr key={delivery.TrackingID}>
-                <td>{delivery.TrackingID}</td>
-                <td>{delivery.Address}</td>
-                <td>{delivery.UnitNo}</td>
-                {/* <td>{delivery.deliveryID}</td>
-                <td>{delivery.Addressee}</td>
-                <td>{delivery.Address}</td>
-                <td>{delivery.Sender}</td> */}
-                <td><Button className="btn btn-lg btn-success" onClick={() => this.remove(delivery.TrackingID)}><FontAwesomeIcon icon={faThumbsUp}></FontAwesomeIcon> Delivered</Button></td>
-                <td><Button className="btn btn-lg btn-danger" onClick={() => this.doNothing()}><FontAwesomeIcon icon={faThumbsDown}></FontAwesomeIcon> Undelivered</Button></td>
-                <td><Button className="btn btn-lg btn-info" onClick={() => this.locateRecipient(delivery.Address)}><FontAwesomeIcon icon={faSearchLocation}></FontAwesomeIcon> Search</Button></td>
-                <td><Button className="btn btn-lg btn-warning" onClick={this.doNothing()}><FontAwesomeIcon icon={faLocationArrow}></FontAwesomeIcon> Direction</Button></td>
-            </tr>
-        )
+        if (this.state.isSubmit) {
+          const allDevliveries = this.state.deliveries;
 
-        return ( 
+          // use this for current auth user info
+          //console.log(this.props.auth);
+          
+          let deliveries = allDevliveries.map(
+              delivery =>
+              <tr key={delivery.TrackingID}>
+                  <td>{delivery.TrackingID}</td>
+                  <td>{delivery.Address}</td>
+                  <td>{delivery.UnitNo}</td>
+                  {/* <td>{delivery.deliveryID}</td>
+                  <td>{delivery.Addressee}</td>
+                  <td>{delivery.Address}</td>
+                  <td>{delivery.Sender}</td> */}
+                  <td><Button className="btn btn-lg btn-success" onClick={() => this.remove(delivery.TrackingID)}><FontAwesomeIcon icon={faThumbsUp}></FontAwesomeIcon> Delivered</Button></td>
+                  <td><Button className="btn btn-lg btn-danger" onClick={() => this.doNothing()}><FontAwesomeIcon icon={faThumbsDown}></FontAwesomeIcon> Undelivered</Button></td>
+                  <td><Button className="btn btn-lg btn-info" onClick={() => this.locateRecipient(delivery.Address)}><FontAwesomeIcon icon={faSearchLocation}></FontAwesomeIcon> Search</Button></td>
+                  <td><Button className="btn btn-lg btn-warning" onClick={this.getDirections()}><FontAwesomeIcon icon={faLocationArrow}></FontAwesomeIcon> Direction</Button></td>
+              </tr>
+          )
+          return ( 
             <div className="container border center">
                 <div className="row">
                     <div className="col-12 text-center">
@@ -269,13 +296,49 @@ class Delivery extends Component {
                         </Table>
                     </div>
                 </div>
-               {/* <div><Signup /></div> 
-               <div><Login /></div>  */}
-               
             </div>
-           
-           
          );
+        } else {
+          return (
+            <section className="section is-medium">
+              <div className="container">
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="error-template">
+                      <form onSubmit={this.submitRetrieve}>
+                        <h1>Please choose your region to retreive delivery order</h1>
+                        <div className="error-details">
+                          <div className="field">
+                            <div className="control">
+                              <div className="select">
+                                <select id="region" value={this.state.region} onChange={(event) => this.onInputChange(event)}>
+                                  <option value="">Select region</option>
+                                  <option value="West">West</option>
+                                  <option value="East">East</option>
+                                  <option value="Northeast">Northeast</option>
+                                  <option value="Central">Central</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="error-actions">
+                          <div className="field">
+                            <div className="control">
+                              <Button className="button is-primary" disabled={ this.state.inputDisable }>
+                                Retrieve Order 
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          );
+        }
     }
 }
  
