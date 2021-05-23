@@ -70,7 +70,7 @@ class Tracking extends Component {
       this.setState({ trackingid: this.state.value });
 
       const response = await axios.get(
-        `${config.api.trackingIDURL}` + trackingid
+        `${config.api.getDeliveryEventsURL}` + trackingid
       );
       //   console.log(`${config.api.trackingIDURL}` + trackingid);
       //console.log(response);
