@@ -53,7 +53,7 @@ jobs:
         run: npm --prefix ./app run build
       
       - name: copy files to s3
-        run: aws s3 sync ./app/build s3://samurai-cs
+        run: aws s3 sync ./app/build s3://samuraics.net
 
       - name: Invalidate cache
         run: |
