@@ -3,7 +3,11 @@ name: s3 deployment
 on:
   push:
     branches: [main] # branch to run this
-
+    
+permissions:
+  id-token: write   # This is required for requesting the JWT
+  contents: read    # This is required for actions/checkout
+  
 jobs:
   build:
     runs-on: windows-latest # tells github where to build 
@@ -32,8 +36,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
-          role-external-id: ${{ secrets.AWS_ROLE_EXTERNAL_ID }}
-          role-duration-seconds: 1200
+          role-session-name: s3deploymentrolesession
           aws-region: ${{ secrets.AWS_REGION }}
 
       #- name: npm install jquery for bootstrap
