@@ -1,13 +1,13 @@
 {
     "api" : {
         "invokeURL": "https://wvhviz13k5.execute-api.ap-southeast-1.amazonaws.com/prod",
-        "trackingIDURL":"https://4gkag3pogh.execute-api.ap-southeast-1.amazonaws.com/Production/trackingid?tracking=",
-        "getDeliveryRegionAddressURL":"https://4gkag3pogh.execute-api.ap-southeast-1.amazonaws.com/Production/regionaddress?regionname=",
-        "graphURL":"https://4gkag3pogh.execute-api.ap-southeast-1.amazonaws.com/Production/graph",
-        "deliveryRoutingURL" : "https://4gkag3pogh.execute-api.ap-southeast-1.amazonaws.com/Production/deliveryroute",
+        "trackingIDURL":"https://ujur8t2qk0.execute-api.ap-southeast-1.amazonaws.com/Production/trackingid?tracking=",
+        "getDeliveryRegionAddressURL":"https://ujur8t2qk0.execute-api.ap-southeast-1.amazonaws.com/Production/regionaddress?regionname=",
+        "graphURL":"https://ujur8t2qk0.execute-api.ap-southeast-1.amazonaws.com/Production/graph",
+        "deliveryRoutingURL" : "https://ujur8t2qk0.execute-api.ap-southeast-1.amazonaws.com/Production/deliveryroute",
         "batchemailnotificationURL": "https://ey4ifah0fk.execute-api.ap-southeast-1.amazonaws.com/prod/batchnotify",
-        "getDeliveryEventsURL" : "https://4h3dhsie00.execute-api.ap-southeast-1.amazonaws.com/prod/deliveryevents?tracking=",
-        "deliveryconfirmation": "https://4gkag3pogh.execute-api.ap-southeast-1.amazonaws.com/Production/notification"
+        "getDeliveryEventsURL" : "https://2vbnkhxp8d.execute-api.ap-southeast-1.amazonaws.com/prod/deliveryevents?tracking=",
+        "deliveryconfirmation": "https://ujur8t2qk0.execute-api.ap-southeast-1.amazonaws.com/Production/notification"
     },
     "cognito": {
         "REGION": "ap-southeast-1",
