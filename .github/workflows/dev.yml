@@ -89,7 +89,7 @@ jobs:
   publish:
     name: Publish to S3
     needs: sonarqube
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: Download a Build Artifact
         uses: actions/download-artifact@v2.1.1
