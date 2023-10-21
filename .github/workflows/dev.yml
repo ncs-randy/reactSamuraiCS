@@ -62,6 +62,13 @@ jobs:
 
       - name: build
         run: npm --prefix ./app run build
+
+
+      - name: SonarQube Scan
+        uses: kitabisa/sonarqube-action@v1.2.0
+        with:
+          host: ${{ secrets.SONARQUBE_HOST }}
+          login: ${{ secrets.SONARQUBE_TOKEN }}
       
       - name: copy files to s3
         run: aws s3 sync ./app/build s3://samuraics.net
