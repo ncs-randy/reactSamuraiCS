@@ -34,6 +34,12 @@ class Login extends Component {
             this.props.auth.setLoggedInState(true);
             this.props.auth.setUserDriver(true);
             this.props.auth.setUser(user);
+            Auth.currentSession().then(res =>{
+              let accessToken = res.getAccessToken();
+              let jwt = accessToken.getJwtToken();
+              console.log('access token: ${JSON.stringy(accessToken)}');
+              console.log('jwt': ${jwt}');
+            });
             this.props.history.push("/Delivery");
           } else if (user.attributes['custom:role'] === 'Administrator') {
             this.props.auth.setLoggedInState(true);
