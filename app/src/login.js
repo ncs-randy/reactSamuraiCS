@@ -35,7 +35,7 @@ class Login extends Component {
             this.props.auth.setUserDriver(true);
             this.props.auth.setUser(user);
             Auth.currentSession().then(res =>{
-              let accessToken = res.getAccessToken();
+              let accessToken = res.getIdToken();
               let jwt = accessToken.getJwtToken();
               // console.log('access token: ' + JSON.stringify(accessToken));
               // console.log('jwt: ' + jwt);
