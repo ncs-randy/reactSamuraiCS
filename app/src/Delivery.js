@@ -114,6 +114,7 @@ class Delivery extends Component {
             //const region = this.state.value;
             //this.setState({ region: this.state.value });
             // get 100 addresses in the region selected
+            axios.defaults.headers.common = {'Authorization': `Bearer ${this.props.auth.jwt}`}
             const region = regionname;
             const response = await axios.get(`${config.api.getDeliveryRegionAddressURL}` + region);
             const Stops = [];

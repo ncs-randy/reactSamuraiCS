@@ -9,6 +9,7 @@ class Navbar extends Component {
             this.props.auth.setUser(null);
             this.props.auth.setUserDriver(false);
             this.props.auth.setUserAdmin(false);
+            this.props.auth.setJWT(null);
             //this.props.history.push('/');
         } catch (error) {
             console.error(error);

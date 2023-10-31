@@ -17,7 +17,8 @@ class App extends Component {
         isAuthenticating: true,
         user: null,
         isAdmin: false,
-        isDriver: false
+        isDriver: false,
+        jwt: null
     }
      
     setLoggedInState = loggedIn => {
@@ -34,6 +35,10 @@ class App extends Component {
     
     setUser = user => {
         this.setState({ user: user });
+    }
+
+    setJWT = token => {
+        this.setState({ jwt: token });
     }
 
     async componentDidMount() {
@@ -59,6 +64,7 @@ class App extends Component {
             this.setUser(null);
             this.setUserDriver(false);
             this.setUserAdmin(false);
+            this.setJWT(null);
         }
         this.setState({ isAuthenticating: false });
     }
@@ -109,10 +115,12 @@ class App extends Component {
             isDriver: this.state.isDriver,
             isAdmin: this.state.isAdmin,
             user: this.state.user,
+            jwt: this.state.jwt,
             setLoggedInState: this.setLoggedInState,
             setUserDriver: this.setUserDriver,
             setUserAdmin: this.setUserAdmin,
-            setUser: this.setUser
+            setUser: this.setUser,
+            setJWT: this.setJWT
         }
         
         if (isLoading)

@@ -37,8 +37,10 @@ class Login extends Component {
             Auth.currentSession().then(res =>{
               let accessToken = res.getAccessToken();
               let jwt = accessToken.getJwtToken();
-              console.log('access token: ${JSON.stringy(accessToken)}');
-              console.log('jwt': ${jwt}');
+              // console.log('access token: ' + JSON.stringify(accessToken));
+              // console.log('jwt: ' + jwt);
+              this.props.auth.setJWT(jwt);
+              // console.log(jwt);
             });
             this.props.history.push("/Delivery");
           } else if (user.attributes['custom:role'] === 'Administrator') {
