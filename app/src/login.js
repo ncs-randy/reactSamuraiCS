@@ -48,7 +48,7 @@ class Login extends Component {
             this.props.auth.setUserAdmin(true);
             this.props.auth.setUser(user);
             this.props.history.push("/Admin"); // Redirect to admin related page // update the url once page created
-          }else {
+          } else {
             //console.error("The user is not a driver.");
             this.setState({ errorMsg : ["This user is not a driver."] });
           }
