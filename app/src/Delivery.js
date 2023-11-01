@@ -114,7 +114,9 @@ class Delivery extends Component {
             //const region = this.state.value;
             //this.setState({ region: this.state.value });
             // get 100 addresses in the region selected
-            axios.defaults.headers.common = {'Authorization': `Bearer ${this.props.auth.jwt}`}
+            // axios.defaults.headers.common = {'Authorization': `Bearer ${this.props.auth.jwt}`}
+            const authToken = this.getAuthToken();
+            axios.defaults.headers.common['Authorization'] = authToken;
             const region = regionname;
             const response = await axios.get(`${config.api.getDeliveryRegionAddressURL}` + region);
             const Stops = [];
@@ -213,6 +215,11 @@ class Delivery extends Component {
         }catch(err){
             console.log(`An error has occurred: ${err}`);
         }
+     }
+
+     getAuthToken(){
+       const accessToken = localStorage.getItem('CognitoIdentityServiceProvider.3763gdjh2to333fj21s5rl462p.randy-1.accessToken');
+       return `Bearer ${accessToken}`;
      }
 
      async componentDidMount() {
