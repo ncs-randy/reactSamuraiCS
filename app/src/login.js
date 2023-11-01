@@ -35,14 +35,15 @@ class Login extends Component {
             this.props.auth.setLoggedInState(true);
             this.props.auth.setUserDriver(true);
             this.props.auth.setUser(user);
+            let jwt="";
             Auth.currentSession().then(res =>{
               let accessToken = res.getIdToken();
-              let jwt = accessToken.getJwtToken();
+              jwt = accessToken.getJwtToken();
               // console.log('access token: ' + JSON.stringify(accessToken));
               // console.log('jwt: ' + jwt);
-              this.props.auth.setJWT(jwt);
               // console.log(jwt);
             });
+            this.props.auth.setJWT(jwt);
             this.props.history.push("/Delivery");
           } else if (user.attributes['custom:role'] === 'Administrator') {
             this.props.auth.setLoggedInState(true);
