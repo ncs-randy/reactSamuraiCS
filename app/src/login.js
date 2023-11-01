@@ -30,7 +30,6 @@ class Login extends Component {
       // becuase of developer have discontinued developing this library amazon-cognito-identity-js, and bug found when doing token verification
       try {
         await Auth.signIn(this.state.email, this.state.password).then((user) => {
-          console.log('custom:role : ' + user.attributes['custom:role']);
           if (user.attributes['custom:role'] === 'Driver') {
             this.props.auth.setLoggedInState(true);
             this.props.auth.setUserDriver(true);
