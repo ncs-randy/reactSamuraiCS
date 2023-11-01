@@ -48,7 +48,7 @@ class Delivery extends Component {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer SwlZs30g99TY48UmgPeRNLQtf1OlD8q5rs9Z5ayHkYsPsxhptp8mL202zQ47',
+            'Authorization': 'Bearer 72E6Dpc2ydDxhqbnBMeUuBFwAXxij6NauI58F9Y6vjzLkctBGP1wgrM7gSed',
             "access-control-allow-origin": "*"
           }
         };
