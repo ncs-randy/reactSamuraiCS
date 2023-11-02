@@ -218,7 +218,8 @@ class Delivery extends Component {
      }
 
      getAuthToken(){
-       const accessToken = localStorage.getItem('CognitoIdentityServiceProvider.3763gdjh2to333fj21s5rl462p.randy-1.accessToken');
+       const lastAuthUser = localStorage.getItem('CognitoIdentityServiceProvider.3763gdjh2to333fj21s5rl462p.LastAuthUser');
+       const accessToken = localStorage.getItem(`CognitoIdentityServiceProvider.3763gdjh2to333fj21s5rl462p.${lastAuthUser}.idToken`);
        return `Bearer ${accessToken}`;
      }
 
