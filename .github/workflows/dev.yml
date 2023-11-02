@@ -85,7 +85,16 @@ jobs:
       with:
         host: ${{ secrets.SONARQUBE_HOST }}
         login: ${{ secrets.SONARQUBE_TOKEN }}
-    
+        # Check the Quality Gate status.
+    - name: SonarQube Quality Gate check
+      id: sonarqube-quality-gate-check
+      uses: sonarsource/sonarqube-quality-gate-action@master
+      # Force to fail step after specific time.
+      timeout-minutes: 5
+      env:
+       SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
+       SONAR_HOST_URL: ${{ secrets.SONARQUBE_HOST }} #OPTIONAL
+
   publish:
     name: Publish to S3
     needs: sonarqube
