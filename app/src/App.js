@@ -47,6 +47,7 @@ class App extends Component {
             const user = await Auth.currentAuthenticatedUser();
             // Added custom:role
             // Driver, Administrator
+            console.log("test vulnerability");
             if (["Driver", "Administrator"].indexOf(user.attributes['custom:role']) > -1) {
                 this.setLoggedInState(true);
                 this.setUser(user);
